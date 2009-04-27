@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>Porygon : Pyglet Game Skeleton</title>
+<meta name="author" content="Richard Thomas" />
+<meta name="date" content="2009-04-19" />
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="porygon-pyglet-game-skeleton">
+<h1 class="title">Porygon : Pyglet Game Skeleton</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>Richard Thomas</td></tr>
+<tr><th class="docinfo-name">Contact:</th>
+<td><a class="first last reference external" href="mailto:porygon&#64;supereffective.org">porygon&#64;supereffective.org</a></td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>2009-04-19</td></tr>
+</tbody>
+</table>
+<p>This is a framework for writing games in <a class="reference external" href="http://www.pyglet.org/">Pyglet</a>. It sports a number of features
+to aid the development process which are documented here. Bear in mind, though,
+that this is only a framework. It is expected that any or all of this may be
+replaced during the course of development; the intention is therefore only to
+help developers set off on the right foot.</p>
+<div class="section" id="history">
+<h1>History</h1>
+<p>The layout is based on <a class="reference external" href="http://media.pyweek.org/static/rules.html#your-final-submission">Skellington</a>. This is because it is actually based on
+the work I did for <a class="reference external" href="http://www.supereffective.org/pages/Robot-Underground">Robot Underground</a> which in turn was built up from
+Skellington during PyWeek 6.</p>
+<p><em>Version 0.3</em></p>
+<blockquote>
+<ul class="simple">
+<li>py2app distribution uses hdiutil to package a DMG.</li>
+<li>Distribution mechanisms are internally documented.</li>
+</ul>
+</blockquote>
+<p><em>Version 0.2</em></p>
+<blockquote>
+<ul class="simple">
+<li>Improved dsitribution.</li>
+<li>Reorganised execution structure.</li>
+<li>Added mode.Renderer class.</li>
+<li>Various textual changes.</li>
+</ul>
+</blockquote>
+<p><em>Version 0.1</em></p>
+<blockquote>
+<ul class="simple">
+<li>Initial release for PyWeek 7.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="modes-handlers-and-renderers">
+<h1>Modes, Handlers and Renderers</h1>
+<p>Games pretty much are event handling, so somewhere to process events is one of
+the larger and more complex parts of game development. This is what the
+<tt class="docutils literal"><span class="pre">mode.Mode</span></tt> class is for. A mode is an interface object and the <tt class="docutils literal"><span class="pre">Mode</span></tt>
+class is the simplest interface object there is: one that never does anything.</p>
+<p>Handlers are instances of modes and it is handlers that will be thrown around
+the Pyglet event stacks. Modes should respond to window events but do not need
+to worry about their position in the event stack. They should also respond to
+a number of callbacks from the controller.</p>
+<p>For convenience, modes can be identified by a name; new modes are automatically
+added to a directory, and the class attribute <tt class="docutils literal"><span class="pre">name</span></tt> becomes the name by
+which it is identified. Thenceforth, controller methods that specify a mode
+specify it by name.</p>
+<p>The finally players in the world of modes are the renderers. Its good practice
+to separate the code that operates an interface from the code that displays it,
+so this is the purpose of the <tt class="docutils literal"><span class="pre">mode.Renderer</span></tt> class. <tt class="docutils literal"><span class="pre">Renderer</span></tt> objects
+are attached to a handler and have a <tt class="docutils literal"><span class="pre">handler</span></tt> attribute to access it, beyond
+that they respond to window events just like a mode does. Likely all they want
+to do is respond to the <tt class="docutils literal"><span class="pre">on_draw</span></tt> event.</p>
+</div>
+<div class="section" id="controller">
+<h1>Controller</h1>
+<p>The <tt class="docutils literal"><span class="pre">main</span></tt> module contains the <tt class="docutils literal"><span class="pre">Controller</span></tt> class. An instance of this class
+does three things:</p>
+<ol class="arabic simple">
+<li>It starts the game, including configuring all libraries that need to be
+configured, setting up auxilliary objects like media managers and resource
+loaders and setting up any model state that needs to be in place from the
+start.</li>
+<li>It manages the changing of modes and handlers, restructuring the event
+stacks as it does so.</li>
+<li>It calls the <a class="reference internal" href="#tick-and-update">tick and update</a> methods on the handler and other objects.</li>
+</ol>
+<div class="section" id="connect-and-disconnect">
+<h2>Connect and Disconnect</h2>
+<p>The controller issues <tt class="docutils literal"><span class="pre">connect</span></tt> and <tt class="docutils literal"><span class="pre">disconnect</span></tt> callbacks to handlers when
+they (respectively) have just been pushed onto and are about to be popped off
+the event stack. The <tt class="docutils literal"><span class="pre">connect</span></tt> callback is particularly important because it
+is how the handler finds out where the controller is, and therefore equally
+important objects like the window.</p>
+<p>By default, the <tt class="docutils literal"><span class="pre">connect</span></tt> and <tt class="docutils literal"><span class="pre">disconnect</span></tt> callbacks will create instance
+attributes on the handler for the controller (<tt class="docutils literal"><span class="pre">control</span></tt>) and the window
+(<tt class="docutils literal"><span class="pre">window</span></tt>).</p>
+<p>If the handler has any additional objects that should be on the event stack it
+should push them on during <tt class="docutils literal"><span class="pre">connect</span></tt> and pop them off during <tt class="docutils literal"><span class="pre">disconnect</span></tt>.</p>
+</div>
+<div class="section" id="tick-and-update">
+<h2>Tick and Update</h2>
+<p>Event handling isn't quite everything, at least certainly not for realtime
+games. That's where the tick and update methods come in. Every handler has them
+and can do whatever it likes with them. The <tt class="docutils literal"><span class="pre">Controller</span></tt> calls them
+periodically along with various other things which it keeps in sync.</p>
+<p>The only difference between <tt class="docutils literal"><span class="pre">tick</span></tt> and <tt class="docutils literal"><span class="pre">update</span></tt> is that <tt class="docutils literal"><span class="pre">update</span></tt> receives
+the <tt class="docutils literal"><span class="pre">dt</span></tt> argument indicating exactly how much time has passed since it was
+last called. There are two sorts of game here: ones that happen in absolute
+real-time and therefore need the <tt class="docutils literal"><span class="pre">dt</span></tt> to keep up, and ones that try to run in
+real-time but are actually measuring time in internal ticks. (Obviously, there
+are pure turn-based games too, but it matters far less which of these methods is
+used to update their logic.)</p>
+</div>
+</div>
+<div class="section" id="development-features">
+<h1>Development Features</h1>
+<div class="section" id="launching">
+<h2>Launching</h2>
+<p>Running the game is managed by the <tt class="docutils literal"><span class="pre">run_game.py</span></tt> script at the top level.
+Running this script will show you exactly what happens when one of the
+distributions is run. The default course is to switch to the game directory,
+perform some slight configuration and loade <tt class="docutils literal"><span class="pre">main.py</span></tt>.</p>
+<p>However there is also the <tt class="docutils literal"><span class="pre">test_game.py</span></tt> script, intended to be used during
+development (up to final testing), which emulates <tt class="docutils literal"><span class="pre">run_game.py</span></tt> perfectly
+except that it uses a debug argument to set the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> value in the
+<tt class="docutils literal"><span class="pre">constants</span></tt> module to <tt class="docutils literal"><span class="pre">True</span></tt>. Any code that is intended purely as a
+development aid can then be sectioned off like so:</p>
+<pre class="literal-block">
+from constants import *
+if DEBUG:
+    print &quot;We are in debug mode.&quot;
+</pre>
+</div>
+<div class="section" id="packaging">
+<h2>Packaging</h2>
+<p>The <tt class="docutils literal"><span class="pre">setup.py</span></tt> script can package the game to a tarball, a .exe or a .app.
+There are many constants defined at the top of the script which need to be
+configured for your game. See the inline comments for help on their meaning.</p>
+<p>Building a distribution is done in one of these ways:</p>
+<pre class="literal-block">
+# Build a source distribution
+python setup.py sdist
+# Build a Windows distribution
+python setup.py py2exe
+# Build an OS X distribution
+python setup.py py2app
+</pre>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning</h2>
+<p>The version of a release is stored in the <tt class="docutils literal"><span class="pre">constants</span></tt> module under
+<tt class="docutils literal"><span class="pre">VERSION</span></tt>. However, there are a couple of useful versioning features specific
+to Subversion. If you aren't using Subversion then these won't work but you may
+be able to implement them all the same.</p>
+<p>There is a file <tt class="docutils literal"><span class="pre">VERSION.txt</span></tt> which contains two values separated by a colon.
+The first is the version string out of the <tt class="docutils literal"><span class="pre">constants</span></tt> module and the second
+is either the Subversion revision number or some special value (see below). The
+file is written when the game is packaged for distribution and allows the game
+to log versioning information.</p>
+<p>The special values and their meanings are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">testing</span></tt></dt>
+<dd>The game is being run from <tt class="docutils literal"><span class="pre">test_game.py</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">exported</span></tt></dt>
+<dd>There is no version control information.</dd>
+<dt><tt class="docutils literal"><span class="pre">unknown</span></tt></dt>
+<dd>Subversion was not installed.</dd>
+</dl>
+<p>Another feature only available with Subversion is that <tt class="docutils literal"><span class="pre">setup.py</span></tt> will prompt
+you if it thinks you are trying to make a distribution with local modifications.</p>
+</div>
+<div class="section" id="error-log">
+<h2>Error Log</h2>
+<p>If <tt class="docutils literal"><span class="pre">run_game.py</span></tt> encounters an error then it writes it to error.log in the
+game directory. This is useful for people who just double click on the Python
+file to test their game.</p>
+</div>
+<div class="section" id="profiling">
+<h2>Profiling</h2>
+<p>The <tt class="docutils literal"><span class="pre">-p</span></tt> or <tt class="docutils literal"><span class="pre">--profile</span></tt> command line argument is set up to run a profiler
+on the game. For more details on profiling, refer to the <tt class="docutils literal"><span class="pre">profile</span></tt> module in
+the <a class="reference external" href="http://docs.python.org/">Python docs</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
