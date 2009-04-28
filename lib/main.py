@@ -14,6 +14,7 @@ from pyglet.gl import *
 
 import data
 import mode
+import squirtle
 
 import config
 from common import *

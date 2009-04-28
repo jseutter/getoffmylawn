@@ -18,7 +18,7 @@ import mode
 import config
 from common import *
 from constants import *
-
+import squirtle
 
 menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
@@ -33,6 +33,12 @@ class MenuRenderer(mode.Renderer):
     def on_draw(self):
         self.handler.window.clear()
         menu_label.draw()
+
+        squirtle.setup_gl()
+
+        my_svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
+        my_svg.draw(100, 200, angle=15, scale=3)
+
         if DEBUG:
             debug_label.draw()
 
