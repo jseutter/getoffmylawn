@@ -33,12 +33,7 @@ class MenuRenderer(mode.Renderer):
     def on_draw(self):
         self.handler.window.clear()
         menu_label.draw()
-
-        squirtle.setup_gl()
-
-        my_svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
-        my_svg.draw(100, 200, angle=15, scale=3)
-
+        spacebar = text.Label("Press Space to switch modes", font_size=30).draw
         if DEBUG:
             debug_label.draw()
 
@@ -58,16 +53,28 @@ class MenuMode(mode.Mode):
 #######
 
 class GameRenderer(mode.Renderer):
+    svg = None
+    angle = 0
+    def __init__(self, handler):
+        mode.Renderer.__init__(self, handler)
+        squirtle.setup_gl()
+        self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
 
     def on_draw(self):
         self.handler.window.clear()
         game_label.draw()
+        self.angle += 1
+        self.angle = self.angle % 360
+        if(self.svg):
+            self.svg.draw(500, 400, angle=self.angle, scale=1)
+
         if DEBUG:
             debug_label.draw()
 
 class GameMode(mode.Mode):
     name = "game"
     renderer = GameRenderer
+    tick_count = 0
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
@@ -75,3 +82,4 @@ class GameMode(mode.Mode):
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
+
