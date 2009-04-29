@@ -28,6 +28,7 @@ debug_label = text.Label("DEBUG", font_size=20, y=24)
 GOMFL_HEIGHT = 341
 MENU_IMAGE_HEIGHT = 80
 MENU_IMAGE_MARGIN = 25
+
 ## Menu
 #######
 
