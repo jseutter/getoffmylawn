@@ -141,27 +141,27 @@ class GameMode(mode.Mode):
             #t.move()
             
         # Create new targets when needed
-        
-        # If we kill all targets then create a bunch right away
-        if (len(self.target_list) < 1):
-            for i in range(1,2):
-                t = targets.get_random_target()
-                self.target_list.append(t)
-        
         self.timestamp+=dt
         run_len=time.time() - self.runtime
-        mult = run_len / 3
-        mult_x = int(mult)
+        mult = run_len % 3.0
         
-        if (self.timestamp > 0.3):
-            if DEBUG:
-                print "Rate: %s   Multi: %s"%(self.timestamp,mult)
-                print "Frac: %s"%(mult_x)
+        #if DEBUG:
+        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
+        
+        if (self.timestamp > 0.5):
             self.timestamp=0
-            for i in range(0,mult):
-                if DEBUG:
-                    print "Creating target"
+            if DEBUG:
+                print "Creating target"
             
+        if (0 == mult): 
+            if DEBUG:
+                print "Creating target"
+                    
+        # If we kill all targets then create a bunch right away
+        if (len(self.target_list) < 1):
+            for i in range(1,3):
+                t = targets.get_random_target()
+                self.target_list.append(t) 
         
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
