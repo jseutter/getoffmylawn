@@ -27,9 +27,10 @@ menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
-GOMFL_HEIGHT = 341
+GOMFL_HEIGHT = 281
 MENU_IMAGE_HEIGHT = 80
-MENU_IMAGE_MARGIN = 25
+MENU_IMAGE_MARGIN = 70
+
 ## Menu
 #######
 
@@ -66,15 +67,17 @@ class MenuMode(mode.Mode):
     renderer = MenuRenderer
     selected = 0
     def on_key_press(self, sym, mods):
-        if sym in key.ENTER:
-            if selected == 0:
+        if sym == key.ENTER:
+            if self.selected == 0:
                 self.control.switch_handler("game")
-            elif selected == 3:
+            elif self.selected == 3:
                 pyglet.app.exit()
-        elif key.MOTION_DOWN and self.selected <= 3:
-            self.selected += 1
-        elif key.MOTION_UP and self.selected >= 0:
-            self.selected -= 1
+        elif sym == key.DOWN:
+            if self.selected < 3:
+                self.selected += 1
+        elif sym == key.UP:
+            if self.selected > 0:
+                self.selected -= 1
         elif key.ESCAPE:
             pyglet.app.exit()
         else:
