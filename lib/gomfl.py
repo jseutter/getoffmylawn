@@ -13,6 +13,7 @@ from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
 
+import pyglet
 import mode
 
 import config
@@ -32,6 +33,8 @@ class MenuRenderer(mode.Renderer):
 
     def on_draw(self):
         self.handler.window.clear()
+        backdrop = pyglet.image.load('resources/gomfl_background.png')
+        backdrop.blit(0, 0)
 
 class MenuMode(mode.Mode):
     """
