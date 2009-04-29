@@ -142,7 +142,7 @@ class Controller(object):
 
         """
         self.window = window.Window(visible=False, caption=CAPTION,
-                fullscreen=config.fullscreen)
+                fullscreen=config.fullscreen, width=config.width, height=config.height)
         clock.schedule_interval_soft(self.tick, 1.0 / TICK_RATE)
         clock.schedule_interval_soft(self.update, 1.0 / UPDATE_RATE)
 
