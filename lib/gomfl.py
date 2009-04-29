@@ -131,6 +131,7 @@ class GameMode(mode.Mode):
         self.crossHair.handler = self
         self.target_list=[]
         self.runtime=time.time()
+        self.timestamp=0
         
     def update(self,dt):
 
@@ -143,12 +144,26 @@ class GameMode(mode.Mode):
         
         # If we kill all targets then create a bunch right away
         if (len(self.target_list) < 1):
-            for i in range(1,5):
+            for i in range(1,2):
+                #if DEBUG:
+                #    print "Creating target"
                 t = targets.GetTarget()
                 self.target_list.append(t)
         
-        print "Rate: %s"%(dt)
+        self.timestamp+=dt
+        run_len=time.time() - self.runtime
+        mult = run_len / 3
+        mult_x = int(mult)
         
+        if (self.timestamp > 0.3):
+            if DEBUG:
+                print "Rate: %s   Multi: %s"%(self.timestamp,mult)
+                print "Frac: %s"%(mult_x)
+            self.timestamp=0
+            for i in range(0,mult):
+                if DEBUG:
+                    print "Creating target"
+            
         
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
