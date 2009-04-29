@@ -20,6 +20,7 @@ import config
 from common import *
 from constants import *
 import squirtle
+import degrees_of_awesome
 
 from CrossHair import CrossHair
 
@@ -70,6 +71,8 @@ class MenuMode(mode.Mode):
         if sym == key.ENTER:
             if self.selected == 0:
                 self.control.switch_handler("game")
+            elif self.selected == 2:
+                self.control.switch_handler("awesome")
             elif self.selected == 3:
                 pyglet.app.exit()
         elif sym == key.DOWN:
