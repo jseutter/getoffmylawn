@@ -89,3 +89,5 @@ class GameMode(mode.Mode):
             return EVENT_UNHANDLED
         return EVENT_HANDLED
 
+    def on_mouse_motion(self, x, y, dx, dy):
+        print x,y,dx,dy
