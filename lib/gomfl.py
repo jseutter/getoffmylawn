@@ -107,17 +107,17 @@ class GameRenderer(mode.Renderer):
         self.handler.background.draw(0,0,z=0.5)
         self.handler.crossHair.draw()
         game_label.draw()
-        self.handler.angle += 1
-        self.handler.angle = self.handler.angle % 360
-       
+#         self.handler.angle += 1
+#         self.handler.angle = self.handler.angle % 360
+
         if DEBUG:
             debug_label.draw()
            
         self.handler.crossHair.draw()
         
         #Move existing targets if any
-        #for t in self.target_list:
-        #    t.draw()
+        for t in self.handler.target_list:
+            t.draw()
         
         
 class GameMode(mode.Mode):
@@ -141,11 +141,19 @@ class GameMode(mode.Mode):
         
     def update(self,dt):
 
-        #for t in self.target_list:
+        for t in self.target_list:
             #print "Moving target"
             #Move current targets
-            #t.move()
-            
+            oldx = t.x
+            t.move()
+            if oldx < t.x:
+                t.current_view = t.LEFT 
+            elif oldx > t.x:
+                t.curr_view = t.RIGHT
+            else: # no x motion, just swap the view
+                t.curr_view = t.RIGHT if t.curr_view == t.LEFT else t.LEFT
+            t.current_view = t.LEFT 
+
         # Create new targets when needed
         self.timestamp+=dt
         run_len=time.time() - self.runtime
@@ -154,21 +162,26 @@ class GameMode(mode.Mode):
         #if DEBUG:
         #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
         
+        create_target = False
         if (self.timestamp > 0.5):
             self.timestamp=0
-            if DEBUG:
-                print "Creating target"
-            
+            create_target = True
         if (0 == mult): 
+            create_target = True
+
+        if create_target:
+            count = 1
+            if (len(self.target_list) < 1):
+            # If we kill all targets then create a bunch right away
+                count = 3
+            for i in range(count):
+                t = targets.get_random_target()
+                self.target_list.append(t) 
+ 
             if DEBUG:
                 print "Creating target"
                     
-        # If we kill all targets then create a bunch right away
-        if (len(self.target_list) < 1):
-            for i in range(1,3):
-                t = targets.get_random_target()
-                self.target_list.append(t) 
-        
+       
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
             self.control.switch_handler("menu")
