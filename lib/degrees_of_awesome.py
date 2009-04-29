@@ -26,7 +26,7 @@ class AwesomeRenderer(mode.Renderer):
 
         #glyphs = self.amsterdam.get_glyphs('Just a test')
         #pyglet.font.GlyphString("Just a test", glyphs, 40, 200).draw()
-        pyglet.font.Text(self.amsterdam, "Here is the test", 60, 320, color=(0,0,0,1)).draw()
+        pyglet.font.Text(self.amsterdam, "Here is the test", 60, 320, color=(0.27,0.125,0,1)).draw()
                     
 class AwesomeMode(mode.Mode):
     name = "awesome"
