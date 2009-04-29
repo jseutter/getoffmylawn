@@ -1,3 +1,4 @@
 *.pyc
 local.py
 *.log
+VERSION.txt
