@@ -16,6 +16,6 @@ class CrossHair:
         self.svg = squirtle.SVG('resources/crosshair.svg', anchor_x='center', anchor_y='center')
         
     def draw(self):
-        self.svg.draw(self.x, self.y,  angle=0, scale=0.1)
+        self.svg.draw(self.x, self.y, z=1,angle=0, scale=0.1)
 		
 	
