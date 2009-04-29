@@ -13,6 +13,7 @@ from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
 
+import pyglet
 import mode
 
 import config
@@ -26,26 +27,51 @@ menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
-
+GOMFL_HEIGHT = 341
+MENU_IMAGE_HEIGHT = 80
+MENU_IMAGE_MARGIN = 25
 ## Menu
 #######
 
 class MenuRenderer(mode.Renderer):
+    up_images = []
+    down_images = []
+    menu_names = ['play', 'highscores', 'degrees', 'quit']
+
+    def __init__(self, handler):
+        mode.Renderer.__init__(self, handler)
+        for menu_item in self.menu_names:
+            self.up_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_up.png"))
+            self.down_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_down.png"))
 
     def on_draw(self):
         self.handler.window.clear()
-        menu_label.draw()
-        spacebar = text.Label("Press Space to switch modes", font_size=30).draw
-        if DEBUG:
-            debug_label.draw()
+        backdrop = pyglet.image.load('resources/gomfl_background.png')
+        backdrop.blit(0, 0)
+        for i in range(4):
+            if self.handler.selected == i:
+                self.down_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
+            else:
+                self.up_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
+                
 
 class MenuMode(mode.Mode):
+    """
+    0 = play
+    1 = high scores
+    2 = degrees
+    3 = quit
+    """
     name = "menu"
     renderer = MenuRenderer
-
+    selected = 0
     def on_key_press(self, sym, mods):
-        if sym == key.SPACE:
+        if sym in (key.ENTER, key.SPACE):
             self.control.switch_handler("game")
+        elif key.DOWN and self.selected <= 3:
+            self.selected += 1
+        elif key.UP and self.selected >= 0:
+            self.selected -= 1
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
