@@ -12,6 +12,7 @@ from pyglet import text
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
+from pyglet.window import mouse
 
 import pyglet
 import mode
@@ -22,6 +23,10 @@ from constants import *
 import squirtle
 
 from CrossHair import CrossHair
+
+# targets is the target class
+import targets
+import time
 
 menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
@@ -101,7 +106,11 @@ class GameRenderer(mode.Renderer):
             debug_label.draw()
             
         self.handler.crossHair.draw()
-
+        
+        #Move existing targets if any
+        #for t in self.target_list:
+        #    t.draw()
+        
         
 class GameMode(mode.Mode):
     name = "game"
@@ -117,7 +126,27 @@ class GameMode(mode.Mode):
         #self.window.set_mouse_visible(False)
         self.crossHair = CrossHair()
         self.crossHair.handler = self
+        self.target_list=[]
+        self.runtime=time.time()
+        
+    def update(self,dt):
 
+        #for t in self.target_list:
+            #print "Moving target"
+            #Move current targets
+            #t.move()
+            
+        # Create new targets when needed
+        
+        # If we kill all targets then create a bunch right away
+        if (len(self.target_list) < 1):
+            for i in range(1,5):
+                t = targets.GetTarget()
+                self.target_list.append(t)
+        
+        print "Rate: %s"%(dt)
+        
+        
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
             self.control.switch_handler("menu")
@@ -129,4 +158,13 @@ class GameMode(mode.Mode):
         #print x,y,dx,dy
         self.crossHair.x = x
         self.crossHair.y = y
+        
+    def on_mouse_press(self,x,y,button,modifiers):
+        if button == mouse.LEFT:
+            print "Pressed left mouse button"
+        # Check targets
+        # For t in target_list:
+        #   if t.hit(x,y):
+        #     t.death
+        #     ....
 
