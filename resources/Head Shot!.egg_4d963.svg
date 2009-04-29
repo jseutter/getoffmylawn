@@ -1,0 +1,63 @@
+<svg version="1.1" width="1875" height="1650" viewBox="0 0 671 555" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Raven (http://www.aviary.com)</desc>
+  <defs>
+    <radialGradient id="radialGradient4" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient5" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient6" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient7" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient8" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient9" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient10" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient11" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient12" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="radialGradient13" fx="0" fy="0">
+      <stop offset="0" style="stop-color:#000000;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#b30003;stop-opacity:1"/>
+    </radialGradient>
+  </defs>
+  <g id="Layer5572" opacity="1">
+    <path d="M41 59C75 94 135 27 108 86C81 145 35 156 51 169C67 182 90 175 91 166C92 157 102 126 111 122C120 118 124 116 130 129C136 142 108 160 113 175C118 190 118 189 134 188C150 187 154 103 162 92C170 81 197 70 198 59C199 48 180 37 169 41C158 45 145 93 135 96C125 99 121 96 121 86C121 76 145 35 141 30C137 25 123 17 111 23C99 29 82 51 69 51C56 51 44 35 37 42C30 49 41 59 41 59z" id="ShapeObject6258" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient4);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M197 132C207 145 247 152 254 142C261 132 267 99 259 91C251 83 183 77 168 90C153 103 130 163 144 181C158 199 224 220 239 198C254 176 256 162 239 166C222 170 187 181 174 171C161 161 154 148 159 135C164 122 177 101 190 99C203 97 233 95 237 107C241 119 237 130 227 129C217 128 214 111 201 116C188 121 197 132 197 132z" id="ShapeObject6740" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient5);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M272 115C249 127 227 129 223 156C219 183 223 199 244 209C265 219 315 228 325 210C335 192 343 71 330 64C317 57 246 42 237 49C228 56 216 54 217 66C218 78 237 84 247 78C257 72 299 62 309 75C319 88 311 186 298 189C285 192 252 192 249 177C246 162 262 140 275 136C288 132 296 125 291 116C286 107 272 115 272 115z" id="ShapeObject7179" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient6);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M375 129C375 129 309 115 304 155C299 195 298 204 322 215C346 226 382 228 393 216C404 204 421 63 417 55C413 47 413 37 401 37C389 37 383 41 383 53C383 65 375 129 375 129z" id="ShapeObject7470" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient7);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M328 172C327 194 332 198 351 200C370 202 382 194 383 177C384 160 377 143 358 142C339 141 328 172 328 172z" id="ShapeObject7631" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:#ffffff;fill-opacity:1" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M149 242C153 263 117 189 88 195C59 201 27 218 32 247C37 276 104 289 96 304C88 319 57 353 43 342C29 331 20 342 18 349C16 356 33 370 44 370C55 370 152 353 156 332C160 311 164 294 147 284C130 274 64 257 63 242C62 227 84 212 93 215C102 218 120 250 131 251C142 252 152 265 154 254C156 243 149 242 149 242z" id="ShapeObject8138" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient8);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M131 362L131 362L136 370L156 370L163 365L162 302L162 280L173 280L182 294L176 337L177 362L179 368L197 371L210 355L207 311L198 291L195 274L179 260L155 260L138 263L135 254L140 235L143 204L134 193L122 196L113 240L121 319L127 351L132 357" id="ShapeObject8461" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient9);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M222 241L222 241L201 243L172 254L149 275L147 292L171 317L208 340L258 340L267 333L279 304L279 278L258 248L237 238L220 238" id="ShapeObject8735" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient10);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M216 269L216 269L198 272L188 281L190 291L206 302L236 305L250 298L249 280L243 274L215 272L214 269" id="ShapeObject8799" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:#ffffff;fill-opacity:1" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+    <path d="M287 234L287 234L290 261L248 263L249 269L273 271L286 293L286 321L289 372L295 385L310 389L334 387L354 372L363 359L368 337L368 327L356 323L346 326L325 350L319 350L316 325L321 280L374 278L381 273L381 260L364 257L335 256L327 252L325 240L311 225L287 226L286 237" id="ShapeObject8863" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient11);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+  </g>
+  <g id="Layer2511" opacity="1">
+    <path d="M389 324L389 324L378 324L370 325L360 330L353 336L348 344L349 352L361 360L363 363L373 369L382 373L389 375L399 376L402 377L406 377L409 373L411 364L411 351L408 340L408 336L406 333L401 329L393 326L389 326" id="ShapeObject2514" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient12);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+  </g>
+  <g id="Layer2576" opacity="1">
+    <path d="M384 298L384 298L383 294L387 275L393 259L394 252L412 210L422 194L432 182L444 175L448 174L453 174L456 176L466 190L473 207L473 212L468 217L449 230L437 239L433 241L405 269L398 283L393 296L389 296L386 295" id="ShapeObject2579" stroke="#000000" stroke-opacity="1" stroke-width="2" stroke-linejoin="miter" stroke-miterlimit="4" style="fill:url(#radialGradient13);color-interpolation:rgb" transform="matrix(1,0,0,1,0,0)" opacity="1"/>
+  </g>
+</svg>
