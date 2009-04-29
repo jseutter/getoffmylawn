@@ -1,0 +1,3 @@
+''' characters module '''
+
+import enemies

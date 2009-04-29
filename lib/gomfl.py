@@ -12,6 +12,7 @@ from pyglet import text
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
+from pyglet.window import mouse
 
 import pyglet
 import mode
@@ -20,12 +21,17 @@ import config
 from common import *
 from constants import *
 import squirtle
+import degrees_of_awesome
 
 import os
 from pyglet import image
 
 
 from CrossHair import CrossHair
+
+# targets is the target class
+import targets
+import time
 
 menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
@@ -74,6 +80,8 @@ class MenuMode(mode.Mode):
         if sym == key.ENTER:
             if self.selected == 0:
                 self.control.switch_handler("game")
+            elif self.selected == 2:
+                self.control.switch_handler("awesome")
             elif self.selected == 3:
                 pyglet.app.exit()
         elif sym == key.DOWN:
@@ -104,9 +112,13 @@ class GameRenderer(mode.Renderer):
        
         if DEBUG:
             debug_label.draw()
-            
-         
-
+           
+        self.handler.crossHair.draw()
+        
+        #Move existing targets if any
+        #for t in self.target_list:
+        #    t.draw()
+        
         
 class GameMode(mode.Mode):
     name = "game"
@@ -123,7 +135,44 @@ class GameMode(mode.Mode):
 
         self.crossHair = CrossHair()
         self.crossHair.handler = self
+<<<<<<< HEAD:lib/gomfl.py
             
+=======
+        self.target_list=[]
+        self.runtime=time.time()
+        self.timestamp=0
+        
+    def update(self,dt):
+
+        #for t in self.target_list:
+            #print "Moving target"
+            #Move current targets
+            #t.move()
+            
+        # Create new targets when needed
+        self.timestamp+=dt
+        run_len=time.time() - self.runtime
+        mult = run_len % 3.0
+        
+        #if DEBUG:
+        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
+        
+        if (self.timestamp > 0.5):
+            self.timestamp=0
+            if DEBUG:
+                print "Creating target"
+            
+        if (0 == mult): 
+            if DEBUG:
+                print "Creating target"
+                    
+        # If we kill all targets then create a bunch right away
+        if (len(self.target_list) < 1):
+            for i in range(1,3):
+                t = targets.get_random_target()
+                self.target_list.append(t) 
+        
+>>>>>>> 71f0ec68213fd1a2ac20d4261b80ed634a42676a:lib/gomfl.py
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
             self.control.switch_handler("menu")
@@ -137,4 +186,16 @@ class GameMode(mode.Mode):
         self.crossHair.x = x
         self.crossHair.y = y
         
+<<<<<<< HEAD:lib/gomfl.py
         
+=======
+    def on_mouse_press(self,x,y,button,modifiers):
+        if button == mouse.LEFT:
+            print "Pressed left mouse button"
+        # Check targets
+        # For t in target_list:
+        #   if t.hit(x,y):
+        #     t.death
+        #     ....
+
+>>>>>>> 71f0ec68213fd1a2ac20d4261b80ed634a42676a:lib/gomfl.py
