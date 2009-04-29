@@ -32,18 +32,24 @@ class MenuRenderer(mode.Renderer):
 
     def on_draw(self):
         self.handler.window.clear()
-        menu_label.draw()
-        spacebar = text.Label("Press Space to switch modes", font_size=30).draw
-        if DEBUG:
-            debug_label.draw()
 
 class MenuMode(mode.Mode):
+    """
+    0 = play
+    1 = high scores
+    2 = degrees
+    3 = quit
+    """
     name = "menu"
     renderer = MenuRenderer
-
+    selected = 0
     def on_key_press(self, sym, mods):
-        if sym == key.SPACE:
+        if sym in (key.ENTER, key.SPACE):
             self.control.switch_handler("game")
+        elif key.DOWN and self.selected <= 3:
+            self.selected += 1
+        elif key.UP and self.selected >= 0:
+            self.selected -= 1
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
