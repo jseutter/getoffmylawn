@@ -37,3 +37,8 @@ TICK_RATE = 60.0
 #: The "top-level" update rate; the maximum number of times per second that the
 #: controller will call its update method.
 UPDATE_RATE = 60.0
+
+#: Other Constants
+GOMFL_HEIGHT = 281
+MENU_IMAGE_HEIGHT = 80
+MENU_IMAGE_MARGIN = 70
