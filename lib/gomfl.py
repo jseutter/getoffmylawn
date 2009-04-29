@@ -145,9 +145,7 @@ class GameMode(mode.Mode):
         # If we kill all targets then create a bunch right away
         if (len(self.target_list) < 1):
             for i in range(1,2):
-                #if DEBUG:
-                #    print "Creating target"
-                t = targets.GetTarget()
+                t = targets.get_random_target()
                 self.target_list.append(t)
         
         self.timestamp+=dt
