@@ -20,7 +20,7 @@ import config
 from common import *
 from constants import *
 
-import examples
+import gomfl
 
 
 class Controller(object):

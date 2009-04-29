@@ -52,21 +52,14 @@ class MenuMode(mode.Mode):
 ## Game
 #######
 
-class GameRenderer(mode.Renderer):
-    svg = None
-    angle = 0
-    def __init__(self, handler):
-        mode.Renderer.__init__(self, handler)
-        squirtle.setup_gl()
-        self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
-
+class GameRenderer(mode.Renderer):        
     def on_draw(self):
         self.handler.window.clear()
         game_label.draw()
-        self.angle += 1
-        self.angle = self.angle % 360
-        if(self.svg):
-            self.svg.draw(500, 400, angle=self.angle, scale=1)
+        self.handler.angle += 1
+        self.handler.angle = self.handler.angle % 360
+        if(self.handler.svg):    
+		   self.handler.svg.draw(500, 400, angle=self.handler.angle, scale=1)
 
         if DEBUG:
             debug_label.draw()
@@ -75,6 +68,13 @@ class GameMode(mode.Mode):
     name = "game"
     renderer = GameRenderer
     tick_count = 0
+    svg = None
+    angle = 0
+
+    def __init__(self):
+		mode.Mode.__init__(self)
+		self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
+		squirtle.setup_gl()
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
