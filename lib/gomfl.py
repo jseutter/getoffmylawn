@@ -135,9 +135,6 @@ class GameMode(mode.Mode):
 
         self.crossHair = CrossHair()
         self.crossHair.handler = self
-<<<<<<< HEAD:lib/gomfl.py
-            
-=======
         self.target_list=[]
         self.runtime=time.time()
         self.timestamp=0
@@ -172,7 +169,6 @@ class GameMode(mode.Mode):
                 t = targets.get_random_target()
                 self.target_list.append(t) 
         
->>>>>>> 71f0ec68213fd1a2ac20d4261b80ed634a42676a:lib/gomfl.py
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
             self.control.switch_handler("menu")
@@ -186,9 +182,6 @@ class GameMode(mode.Mode):
         self.crossHair.x = x
         self.crossHair.y = y
         
-<<<<<<< HEAD:lib/gomfl.py
-        
-=======
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
             print "Pressed left mouse button"
@@ -198,4 +191,3 @@ class GameMode(mode.Mode):
         #     t.death
         #     ....
 
->>>>>>> 71f0ec68213fd1a2ac20d4261b80ed634a42676a:lib/gomfl.py
