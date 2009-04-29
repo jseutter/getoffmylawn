@@ -21,6 +21,10 @@ from common import *
 from constants import *
 import squirtle
 
+import os
+from pyglet import image
+
+
 from CrossHair import CrossHair
 
 menu_label = text.Label("MENU", font_size=20)
@@ -91,33 +95,35 @@ class MenuMode(mode.Mode):
 class GameRenderer(mode.Renderer):        
     def on_draw(self):
         self.handler.window.clear()
+        
+        self.handler.background.draw(0,0,z=0.5)
+        self.handler.crossHair.draw()
         game_label.draw()
         self.handler.angle += 1
         self.handler.angle = self.handler.angle % 360
-        if(self.handler.svg):    
-		   self.handler.svg.draw(500, 400, angle=self.handler.angle, scale=1)
-
+       
         if DEBUG:
             debug_label.draw()
             
-        self.handler.crossHair.draw()
+         
 
         
 class GameMode(mode.Mode):
     name = "game"
     renderer = GameRenderer
     tick_count = 0
-    svg = None
+    background = None
     angle = 0
     
     def __init__(self):
         mode.Mode.__init__(self)
-        #self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
-        #squirtle.setup_gl()
-        #self.window.set_mouse_visible(False)
+        squirtle.setup_gl()
+        
+        self.background = squirtle.SVG("resources/backdrop.svg")
+
         self.crossHair = CrossHair()
         self.crossHair.handler = self
-
+            
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
             self.control.switch_handler("menu")
@@ -127,6 +133,8 @@ class GameMode(mode.Mode):
 
     def on_mouse_motion(self, x, y, dx, dy):
         #print x,y,dx,dy
+        self.window.set_mouse_visible(False)
         self.crossHair.x = x
         self.crossHair.y = y
-
+        
+        
