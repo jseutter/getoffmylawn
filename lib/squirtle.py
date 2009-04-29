@@ -8,11 +8,13 @@ Example usage:
 """
 
 from pyglet.gl import *
-from xml.etree.cElementTree import parse
 import re
 import math
 from ctypes import CFUNCTYPE, POINTER, byref, cast
 import sys
+import xml.etree.cElementTree
+parse = xml.etree.cElementTree.parse
+#from xml.etree.cElementTree import parse
 
 tess = gluNewTess()
 gluTessNormal(tess, 0, 0, 1)
