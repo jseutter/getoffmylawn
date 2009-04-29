@@ -56,7 +56,7 @@ META = {
 
 # The 'lib' directory should NOT be listed here. If additional packages are
 # in the game directory then they should be listed here.
-PACKAGES = ["pyglet", "_elementtree"]]
+PACKAGES = ["pyglet", "_elementtree"]
 
 # If set, then AVBin will be packaged in the binary distributions. If pyglet is
 # in PACKAGES then this option is likely wanted also.
