@@ -20,6 +20,8 @@ from common import *
 from constants import *
 import squirtle
 
+from CrossHair import CrossHair
+
 menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
@@ -47,7 +49,7 @@ class MenuMode(mode.Mode):
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
-
+       
 
 ## Game
 #######
@@ -63,18 +65,24 @@ class GameRenderer(mode.Renderer):
 
         if DEBUG:
             debug_label.draw()
+            
+        self.handler.crossHair.draw()
 
+        
 class GameMode(mode.Mode):
     name = "game"
     renderer = GameRenderer
     tick_count = 0
     svg = None
     angle = 0
-
+    
     def __init__(self):
-		mode.Mode.__init__(self)
-		self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
-		squirtle.setup_gl()
+        mode.Mode.__init__(self)
+        #self.svg = squirtle.SVG('sample.svg', anchor_x='center', anchor_y='center')
+        #squirtle.setup_gl()
+        #self.window.set_mouse_visible(False)
+        self.crossHair = CrossHair()
+        self.crossHair.handler = self
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
@@ -84,4 +92,7 @@ class GameMode(mode.Mode):
         return EVENT_HANDLED
 
     def on_mouse_motion(self, x, y, dx, dy):
-        print x,y,dx,dy
+        #print x,y,dx,dy
+        self.crossHair.x = x
+        self.crossHair.y = y
+
