@@ -25,16 +25,33 @@ menu_label = text.Label("MENU", font_size=20)
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
-
+GOMFL_HEIGHT = 341
+MENU_IMAGE_HEIGHT = 80
+MENU_IMAGE_MARGIN = 25
 ## Menu
 #######
 
 class MenuRenderer(mode.Renderer):
+    up_images = []
+    down_images = []
+    menu_names = ['play', 'highscores', 'degrees', 'quit']
+
+    def __init__(self, handler):
+        mode.Renderer.__init__(self, handler)
+        for menu_item in self.menu_names:
+            self.up_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_up.png"))
+            self.down_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_down.png"))
 
     def on_draw(self):
         self.handler.window.clear()
         backdrop = pyglet.image.load('resources/gomfl_background.png')
         backdrop.blit(0, 0)
+        for i in range(4):
+            if self.handler.selected == i:
+                self.down_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
+            else:
+                self.up_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
+                
 
 class MenuMode(mode.Mode):
     """
