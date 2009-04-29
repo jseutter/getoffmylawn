@@ -7,7 +7,7 @@
 """
 
 import os
-import readline
+#import readline
 import shutil
 import subprocess
 import sys
