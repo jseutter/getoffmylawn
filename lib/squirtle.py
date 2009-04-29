@@ -13,6 +13,7 @@ import math
 from ctypes import CFUNCTYPE, POINTER, byref, cast
 import sys
 import xml.etree.cElementTree
+print >> sys.stderr, dir(xml.etree.cElementTree)
 parse = xml.etree.cElementTree.parse
 #from xml.etree.cElementTree import parse
 
