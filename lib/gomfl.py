@@ -67,14 +67,14 @@ class MenuMode(mode.Mode):
     renderer = MenuRenderer
     selected = 0
     def on_key_press(self, sym, mods):
-        if sym in key.ENTER:
+        if sym == key.ENTER:
             if selected == 0:
                 self.control.switch_handler("game")
             elif selected == 3:
                 pyglet.app.exit()
-        elif key.MOTION_DOWN and self.selected <= 3:
+        elif sym == key.DOWN and self.selected <= 3:
             self.selected += 1
-        elif key.MOTION_UP and self.selected >= 0:
+        elif sym == key.UP and self.selected >= 0:
             self.selected -= 1
         elif key.ESCAPE:
             pyglet.app.exit()
