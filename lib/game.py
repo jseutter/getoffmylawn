@@ -32,8 +32,6 @@ class GameRenderer(mode.Renderer):
         self.handler.background.draw(0,0,z=0.5)
         self.handler.crossHair.draw()
         game_label.draw()
-#         self.handler.angle += 1
-#         self.handler.angle = self.handler.angle % 360
 
         if DEBUG:
             debug_label.draw()

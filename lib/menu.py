@@ -26,9 +26,13 @@ class MenuRenderer(mode.Renderer):
 
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
+        i = 0
         for menu_item in self.menu_names:
             self.up_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_up.png"))
             self.down_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_down.png"))
+            self.handler.menu_boxes.append((MENU_IMAGE_MARGIN, MENU_IMAGE_MARGIN+MENU_IMAGE_WIDTH,
+                                    GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * (i-1), GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * (i)))
+            i+= 1
 
     def on_draw(self):
         self.handler.window.clear()
@@ -41,6 +45,8 @@ class MenuRenderer(mode.Renderer):
                 self.up_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
 
 
+
+
 class MenuMode(mode.Mode):
     """
     0 = play
@@ -51,14 +57,19 @@ class MenuMode(mode.Mode):
     name = "menu"
     renderer = MenuRenderer
     selected = 0
+    menu_boxes = [] #tuples of x1,x2,y1,y2 for box bounds
+    
+    def _switch_control(self):
+        if self.selected == 0:
+            self.control.switch_handler("game")
+        elif self.selected == 2:
+            self.control.switch_handler("awesome")
+        elif self.selected == 3:
+            pyglet.app.exit()
+    
     def on_key_press(self, sym, mods):
         if sym == key.ENTER:
-            if self.selected == 0:
-                self.control.switch_handler("game")
-            elif self.selected == 2:
-                self.control.switch_handler("awesome")
-            elif self.selected == 3:
-                pyglet.app.exit()
+            self._switch_control()
         elif sym == key.DOWN:
             if self.selected < 3:
                 self.selected += 1
@@ -70,3 +81,17 @@ class MenuMode(mode.Mode):
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
+        
+    def on_mouse_motion(self, x, y, dx, dy):
+        #print x,y,dx,dy
+        print "x: %s, y: %s" %(x,y)            
+        for (x_min, x_max, y_max, y_min), index in zip(self.menu_boxes, range(4)):
+            if (x > x_min and
+                x < x_max and
+                y > y_min and
+                y < y_max):
+                self.selected = index
+
+    def on_mouse_press(self,x,y,button,modifiers):
+        if button == mouse.LEFT:
+            self._switch_control()
