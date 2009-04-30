@@ -43,6 +43,7 @@ class Character(object):
     left=None
     right=None
     dead=None
+    time_til_switch = 0
 
     def __init__(self, speed=0.01, strength=1):
         '''
@@ -104,6 +105,13 @@ class Character(object):
         self.scale = (
                 (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
             ) * (self.ZMAX - self.z) + self.SCALEMIN
+        if(self.curr_view == self.LEFT and self.time_til_switch == 0):
+            self.curr_view = self.RIGHT
+            self.time_til_switch = random.randint(5,20)
+        elif(self.curr_view == self.RIGHT and self.time_til_switch == 0):
+            self.curr_view =self.LEFT
+            self.time_til_switch = random.randint(5,20)
+        self.time_til_switch -= 1
 
     def draw(self):
         getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
