@@ -9,8 +9,8 @@ from pyglet import image
 from pyglet import font
 
 degrees = {
-    1 : ('Starting', "See 5 Enemies"),
-    2 : ('Second Achievement', "Get this by being awesome"),
+    1 : ('Starting Out', "Got the Game Running"),
+    2 : ('Killah', "Killed 100 Ninjas"),
     3 : ('Third Achievement', "Get this by being awesome"),
     4 : ('Fourth Achievement', "Get this by being awesome"),
     5 : ('Fifth Achievement', "Get this by being awesome"),
