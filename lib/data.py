@@ -1,7 +1,5 @@
 """Data loaders.
-
 Add functions here to load specific types of resources.
-
 """
 
 from __future__ import division

@@ -13,6 +13,7 @@ from pyglet.window import mouse
 import mode
 import squirtle
 import config
+
 from common import *
 from constants import *
 
@@ -83,9 +84,6 @@ class GameMode(mode.Mode):
         self.timestamp+=dt
         run_len=time.time() - self.runtime
         mult = run_len % 3.0
-
-        #if DEBUG:
-        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
 
         create_target = False
         if (self.timestamp > 0.5):
