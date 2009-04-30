@@ -33,7 +33,7 @@ class GameRenderer(mode.Renderer):
 
         self.handler.background.draw(0,0,z=0.5)
         self.handler.crossHair.draw()
-        game_label.draw()
+        #game_label.draw()
 
         hits = text.Label("Hits:  %s"%(self.handler.hits),font_size=20,x=700,y=570)
         miss = text.Label("Miss: %s"%(self.handler.miss),font_size=20,x=700,y=545)
@@ -47,8 +47,8 @@ class GameRenderer(mode.Renderer):
         self.handler.crossHair.draw()
 
         #Move existing targets if any
-        for t in self.handler.target_list:
-            t.draw()
+        for t in range(len(self.handler.target_list)):
+            self.handler.target_list[-t-1].draw()
 
 
 class GameMode(mode.Mode):

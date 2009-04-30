@@ -7,6 +7,9 @@ import math
 import random
 from .squirtle import SVG
 
+ANGLES=[x for x in range(5,-1,-1)] + [x for x in range(359,349,-1)] + [x for x in range(351,360)] + [x for x in range(0,5)]
+LEN_ANGLES=len(ANGLES)
+
 class Character(object):
     ''' A generic GOMFL character '''
 
@@ -23,7 +26,7 @@ class Character(object):
     is_drawn = False
 
     # The scaling size should be related to the y position
-    scale=0.3
+    scale_multiply=0.003
 
     # Speed and strenght options
     speed=1
@@ -35,12 +38,15 @@ class Character(object):
     ymin=275
     xmax=775
     xmin=50
+            
  
     def __init__(self):
         # What path to take and path options
         self.x = random.randint(self.xmin, self.xmax)
         self.y = random.randint(self.ymin, self.ymax)
         self.attack_path=self._vector()
+        self.angle = random.randint(0, LEN_ANGLES-1)
+        self.scale = (self.ymax - self.y) * self.scale_multiply
         #self.x = 400 
         #self.y = 400
         
@@ -89,12 +95,13 @@ class Character(object):
             delta = self.attack_path.pop(0)
             self.x = delta[0]
             self.y = delta[1]
+            self.angle = (self.angle + 1) % LEN_ANGLES
+            self.scale = (self.ymax - self.y) * self.scale_multiply
         except IndexError:
             pass # no more path
 
     def draw(self):
-        getattr(self, self.curr_view).draw(self.x, self.y, angle=0, scale=self.scale)
-
+        getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
 
 def create_svg(file_name, anchor_x='center', anchor_y='bottom'):
     return SVG(
