@@ -1,11 +1,22 @@
 import mode
 from pyglet.window import key
-
+from constants import *
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 import pyglet
 
-BAR_HEIGHT = 55
+degrees = {
+    1 : ('First Achievement', "Get this by being awesome"),
+    2 : ('Second Achievement', "Get this by being awesome"),
+    3 : ('Third Achievement', "Get this by being awesome"),
+    4 : ('Fourth Achievement', "Get this by being awesome"),
+    5 : ('Fifth Achievement', "Get this by being awesome"),
+    6 : ('Sixth Achievement', "Get this by being awesome"),
+    7 : ('Seveth Achievement', "Get this by being awesome"),
+    8 : ('Eighth Achievement', "Get this by being awesome"),
+    9 : ('Nineth Achievement', "Get this by being awesome"),
+    10 : ('Tenth Achievement', "Get this by being awesome")
+}
 
 class AwesomeRenderer(mode.Renderer):
     bar = pyglet.image.load('resources/achievement_bar.png')
@@ -14,7 +25,24 @@ class AwesomeRenderer(mode.Renderer):
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
         pyglet.font.add_file('resources/amsterdam.ttf')
-        self.amsterdam = pyglet.font.load('Amsterdam Graffiti', 50)
+        self.amsterdam = pyglet.font.load('Amsterdam Graffiti', 45)
+        if(not self.handler.menu_boxes):
+            self.handler.menu_boxes = []
+            for i in range(10):
+                self.handler.menu_boxes.append((50, 700, 
+                            550 - i * BAR_HEIGHT, 550 - (i + 1) * BAR_HEIGHT))
+
+    def _blit_bar(self, i):
+        offset = 0
+        if (i == self.handler.selected):
+            offset = -30
+
+        self.bar.blit(50 + offset, 520 - i * BAR_HEIGHT)            
+        pyglet.font.Text(self.amsterdam, 
+                         degrees[i+1][0], 
+                         80 + offset, 
+                         535 - i * BAR_HEIGHT, 
+                         color=(0.27,0.125,0,1)).draw()
 
     def on_draw(self):
         self.handler.window.clear()
@@ -22,21 +50,37 @@ class AwesomeRenderer(mode.Renderer):
         backdrop.blit(0, 0)
         
         for i in range(10):
-            self.bar.blit(50, 520 - i * BAR_HEIGHT)
+            self._blit_bar(i)
 
-        #glyphs = self.amsterdam.get_glyphs('Just a test')
-        #pyglet.font.GlyphString("Just a test", glyphs, 40, 200).draw()
-        pyglet.font.Text(self.amsterdam, "Here is the test", 60, 320, color=(0.27,0.125,0,1)).draw()
-                    
 class AwesomeMode(mode.Mode):
     name = "awesome"
     renderer = AwesomeRenderer
+    selected = 1
+    menu_boxes = None
     
     def on_key_press(self, sym, mods):
         if sym == key.ENTER:
             pass
+        elif sym == key.DOWN:
+            if self.selected < 10:
+                self.selected += 1
+        elif sym == key.UP:
+            if self.selected > 0:
+                self.selected -= 1
         elif key.ESCAPE:
-            self.control.switch_handler("menu")  
+            self.control.switch_handler("menu")
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
+
+    def on_mouse_motion(self, x, y, dx, dy):   
+        for (x_min, x_max, y_max, y_min), index in zip(self.menu_boxes, range(10)):
+            if (x > x_min and
+                x < x_max and
+                y > y_min and
+                y < y_max):
+                self.selected = index + 1
+
+    def on_mouse_press(self,x,y,button,modifiers):
+        if button == mouse.LEFT:
+            pass        

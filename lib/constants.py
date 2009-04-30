@@ -39,7 +39,12 @@ TICK_RATE = 60.0
 UPDATE_RATE = 60.0
 
 #: Other Constants
+#: Menu Stuff
 GOMFL_HEIGHT = 281
 MENU_IMAGE_HEIGHT = 80
 MENU_IMAGE_MARGIN = 70
 MENU_IMAGE_WIDTH = 600
+
+#: Degrees of Awesome
+BAR_HEIGHT = 55 
+
