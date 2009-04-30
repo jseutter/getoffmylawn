@@ -107,7 +107,7 @@ class GameMode(mode.Mode):
 
         self.crossHair = CrossHair()
         self.crossHair.handler = self
-        self.target_controller = TargetController(TargetController.HARD)
+        self.target_controller = TargetController(TargetController.MEDIUM)
         self.runtime=time.time()
         self.timestamp=0
         self.hits=0
