@@ -104,6 +104,12 @@ class Character(object):
         self.scale = (
                 (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
             ) * (self.ZMAX - self.z) + self.SCALEMIN
+        if(self.curr_view == self.LEFT and self.time_til_switch <= 0):
+            self.curr_view = self.RIGHT
+            self.time_til_switch = random.randint(5,8)
+        elif(self.curr_view == self.RIGHT and self.time_til_switch <= 0):
+            self.curr_view =self.LEFT
+            self.time_til_switch = random.randint(5,8)
         if self.time_til_switch <= 0:
             self.curr_view = self.RIGHT if self.curr_view == self.LEFT else self.LEFT
             self.time_til_switch = 10 #random.randint(5,20)
