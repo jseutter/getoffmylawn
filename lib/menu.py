@@ -31,11 +31,11 @@ class MenuRenderer(mode.Renderer):
             self.down_images.append(pyglet.image.load('resources/menu_images/' + menu_item + "_down.png"))
             self.handler.menu_boxes.append((MENU_IMAGE_MARGIN, MENU_IMAGE_MARGIN+MENU_IMAGE_WIDTH,
                                     GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * (i-1), GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * (i)))
+        self.backdrop = pyglet.image.load('resources/gomfl_background.png')
 
     def on_draw(self):
         self.handler.window.clear()
-        backdrop = pyglet.image.load('resources/gomfl_background.png')
-        backdrop.blit(0, 0)
+        self.backdrop.blit(0, 0)
         for i in range(4):
             if self.handler.selected == i:
                 self.down_images[i].blit(MENU_IMAGE_MARGIN, GOMFL_HEIGHT - MENU_IMAGE_HEIGHT * i)
