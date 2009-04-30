@@ -175,7 +175,7 @@ class GameMode(mode.Mode):
 
             # Check targets for hit
             check_hit=0
-            for t in reversed(self.target_controller.targets):
+            for t in self.target_controller.targets:
                 if t.hit(x,y):
                     self.target_controller.targets.remove(t)
                     check_hit=1
