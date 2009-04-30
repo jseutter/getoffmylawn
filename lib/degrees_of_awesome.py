@@ -5,10 +5,11 @@ from constants import *
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import mouse
-import pyglet
+from pyglet import image
+from pyglet import font
 
 degrees = {
-    1 : ('First Achievement', "Get this by being awesome"),
+    1 : ('Starting', "See 5 Enemies"),
     2 : ('Second Achievement', "Get this by being awesome"),
     3 : ('Third Achievement', "Get this by being awesome"),
     4 : ('Fourth Achievement', "Get this by being awesome"),
@@ -27,22 +28,23 @@ def unlock(degree):
     if (achievements[degree - 1] == 1):
         pass #already unlocked
     else:
+        print "Unlocking?"
         achievements[degree - 1] = 1
         config.save_option('achievements', achievements)
-        new_achievements.append(degrees(degree))
+        new_achievements.append(degrees[degree])
 
 class AwesomeRenderer(mode.Renderer):
-    bar = pyglet.image.load('resources/achievement_bar.png')
+    bar = image.load('resources/achievement_bar.png')
     amsterdam = None
-    star = pyglet.image.load('resources/star.png')
-    lock = pyglet.image.load('resources/lock.png')
-    backdrop = pyglet.image.load('resources/non_gomfl_background.png')
-    dialog = pyglet.image.load('resources/achievement_dialog.png')
+    star = image.load('resources/star.png')
+    lock = image.load('resources/lock.png')
+    backdrop = image.load('resources/non_gomfl_background.png')
+    dialog = image.load('resources/achievement_dialog.png')
     
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
-        pyglet.font.add_file('resources/amsterdam.ttf')
-        self.amsterdam = pyglet.font.load('Amsterdam Graffiti', 45)
+        font.add_file('resources/amsterdam.ttf')
+        self.amsterdam = font.load('Amsterdam Graffiti', 45)
         if(not self.handler.menu_boxes):
             self.handler.menu_boxes = []
             for i in range(10):
@@ -61,7 +63,7 @@ class AwesomeRenderer(mode.Renderer):
         else:    
             self.lock.blit (60 + offset, 523 - i * BAR_HEIGHT)
             
-        pyglet.font.Text(self.amsterdam, 
+        font.Text(self.amsterdam, 
                          degrees[i+1][0], 
                          120 + offset, 
                          535 - i * BAR_HEIGHT, 

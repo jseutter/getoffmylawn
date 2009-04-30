@@ -5,6 +5,7 @@ from __future__ import division
 import os.path
 
 from pyglet import text
+from pyglet import font
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
@@ -13,6 +14,8 @@ from pyglet.window import mouse
 import mode
 import squirtle
 import config
+import degrees_of_awesome
+
 from common import *
 from constants import *
 
@@ -28,6 +31,13 @@ debug_label = text.Label("DEBUG", font_size=20, y=24)
 MAX_TARGETS = 100
 
 class GameRenderer(mode.Renderer):
+    amsterdam = None
+
+    def __init__(self, handler):
+         mode.Renderer.__init__(self, handler)
+         font.add_file('resources/amsterdam.ttf')
+         self.amsterdam = font.load('Amsterdam Graffiti', 24)
+    
     def on_draw(self):
         self.handler.window.clear()
 
@@ -50,6 +60,21 @@ class GameRenderer(mode.Renderer):
         for t in self.handler.target_list:
             t.draw()
 
+        # Show achievement unlocked
+        if (self.handler.achievement_counter):
+            self.handler.achievement_counter -= 1
+            self._blit_degree_unlocked("You Rock, Your Degree of Awesomeness has increased")
+        elif (degrees_of_awesome.new_achievements):
+            degree_text = degrees_of_awesome.new_achievements.pop()
+            self._blit_degree_unlocked("You Rock, Your Degree of Awesomeness has increased")
+            self.handler.achievement_counter = 100
+
+    def _blit_degree_unlocked(self, text):
+        font.Text(self.amsterdam, 
+                     text, 
+                     100, 
+                     300, 
+                     color=(0.9,0.1,0.1,1)).draw()
 
 class GameMode(mode.Mode):
     name = "game"
@@ -57,7 +82,7 @@ class GameMode(mode.Mode):
     tick_count = 0
     background = None
     angle = 0
-
+    achievement_counter = None
     def __init__(self):
         mode.Mode.__init__(self)
         squirtle.setup_gl()
@@ -115,6 +140,10 @@ class GameMode(mode.Mode):
 
             if DEBUG:
                 print "Creating target"
+
+            if (len(self.target_list) == 5):
+                print "fired"
+                degrees_of_awesome.unlock(1)
 
 
     def on_key_press(self, sym, mods):
