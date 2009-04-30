@@ -22,7 +22,7 @@ from constants import *
 from CrossHair import CrossHair
 
 # targets is the target class
-import targets
+from targets import TargetController
 import time
 
 game_label = text.Label("GAME", font_size=20)
@@ -37,7 +37,7 @@ class GameRenderer(mode.Renderer):
          mode.Renderer.__init__(self, handler)
          font.add_file('resources/amsterdam.ttf')
          self.amsterdam = font.load('Amsterdam Graffiti', 24)
-    
+
     def on_draw(self):
         self.handler.window.clear()
 
@@ -45,20 +45,36 @@ class GameRenderer(mode.Renderer):
         self.handler.crossHair.draw()
         #game_label.draw()
 
-        hits = text.Label("Hits:  %s"%(self.handler.hits),font_size=20,x=700,y=570)
-        miss = text.Label("Miss: %s"%(self.handler.miss),font_size=20,x=700,y=545)
-        
+        # Stats Calc
+        try:
+            accuracy_value = self.handler.hits / (self.handler.hits + self.handler.miss)
+        except ZeroDivisionError:
+            accuracy_value = 1.0
+        accuracy_color = (int((1 - accuracy_value) * 255), int(accuracy_value * 255), 0, 255)
+
+        # TODO: Put some monospace font here
+        hits = text.Label(
+            "Hits:  %s"%(self.handler.hits),
+            font_size=20, color=accuracy_color, x=675, y=570)
+        miss = text.Label(
+            "Miss: %s"%(self.handler.miss),
+            font_size=20, color=accuracy_color, x=675, y=545)
+        accuracy = text.Label(
+            "Acc: %.0f%%"%(accuracy_value*100),
+            font_size=20, color=accuracy_color, x=675, y=520)
+
         hits.draw()
         miss.draw()
-        
+        accuracy.draw()
+
         if DEBUG:
             debug_label.draw()
 
         self.handler.crossHair.draw()
 
-        #Move existing targets if any
-        for t in range(len(self.handler.target_list)):
-            self.handler.target_list[-t-1].draw()
+        # Redraw existing targets
+        for t in reversed(self.handler.target_controller.targets):
+            t.draw()
 
         # Show achievement unlocked
         if (self.handler.achievement_counter):
@@ -70,10 +86,10 @@ class GameRenderer(mode.Renderer):
             self.handler.achievement_counter = 100
 
     def _blit_degree_unlocked(self, text):
-        font.Text(self.amsterdam, 
-                     text, 
-                     100, 
-                     300, 
+        font.Text(self.amsterdam,
+                     text,
+                     100,
+                     300,
                      color=(0.9,0.1,0.1,1)).draw()
 
 class GameMode(mode.Mode):
@@ -91,7 +107,7 @@ class GameMode(mode.Mode):
 
         self.crossHair = CrossHair()
         self.crossHair.handler = self
-        self.target_list=[]
+        self.target_controller = TargetController(TargetController.HARD)
         self.runtime=time.time()
         self.timestamp=0
         self.hits=0
@@ -99,11 +115,10 @@ class GameMode(mode.Mode):
 
     def update(self,dt):
 
-        for t in self.target_list:
+        for t in self.target_controller.targets:
             #print "Moving target"
-            #Move current targets
             oldx = t.x
-            t.move()
+            t.move(dt)
             if oldx < t.x:
                 t.current_view = t.LEFT
             elif oldx > t.x:
@@ -112,39 +127,32 @@ class GameMode(mode.Mode):
                 t.curr_view = t.RIGHT if t.curr_view == t.LEFT else t.LEFT
             t.current_view = t.LEFT
 
-        # Create new targets when needed
+        # Incrementing counters and timers
         self.timestamp+=dt
         run_len=time.time() - self.runtime
-        mult = run_len % 3.0
 
-        #if DEBUG:
-        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
-
+        # checking: should we create target(s)
         create_target = False
-        if (self.timestamp > 0.5):
+        if (self.timestamp > self.target_controller.release_rate):
             self.timestamp=0
             create_target = True
-        if (0 == mult):
-            create_target = True
-
         if create_target:
+            # K Were supposed to create target(s)
             count = 1
-            if (len(self.target_list) < 1):
+            if (len(self.target_controller.targets) < 1):
                 # If we kill all targets then create a bunch right away
-                count = 3
-            
+                count = self.target_controller.relive_count
+
             for i in range(count):
-                if (len(self.target_list) < MAX_TARGETS):
-                    t = targets.get_random_target()
-                    self.target_list.append(t)
+                if (len(self.target_controller.targets) < MAX_TARGETS):
+                    self.target_controller.generate_target(run_len)
 
             if DEBUG:
                 print "Creating target"
 
-            if (len(self.target_list) == 5):
+            if (len(self.target_controller.targets) == 5):
                 print "fired"
                 degrees_of_awesome.unlock(1)
-
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
@@ -165,18 +173,16 @@ class GameMode(mode.Mode):
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
             print "Pressed left mouse button (%s, %s)" %(x,y)
-            
+
         # Check targets
         check_hit=0
-        for t in self.target_list:
+        for t in self.target_controller.targets:
             if t.hit(x,y):
-                self.target_list.remove(t)
+                self.target_controller.targets.remove(t)
                 check_hit=1
                 break
-          
+
         if 1 == check_hit:
             self.hits +=1
         else:
             self.miss +=1
-             
-
