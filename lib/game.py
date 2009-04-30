@@ -25,6 +25,8 @@ import time
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
+MAX_TARGETS = 100
+
 class GameRenderer(mode.Renderer):
     def on_draw(self):
         self.handler.window.clear()
@@ -95,11 +97,13 @@ class GameMode(mode.Mode):
         if create_target:
             count = 1
             if (len(self.target_list) < 1):
-            # If we kill all targets then create a bunch right away
+                # If we kill all targets then create a bunch right away
                 count = 3
+            
             for i in range(count):
-                t = targets.get_random_target()
-                self.target_list.append(t)
+                if (len(self.target_list) < MAX_TARGETS):
+                    t = targets.get_random_target()
+                    self.target_list.append(t)
 
             if DEBUG:
                 print "Creating target"
@@ -120,10 +124,11 @@ class GameMode(mode.Mode):
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
-            print "Pressed left mouse button"
+            print "Pressed left mouse button (%s, %s)" %(x,y)
+            
         # Check targets
-        # For t in target_list:
-        #   if t.hit(x,y):
-        #     t.death
-        #     ....
+        for t in self.target_list:
+            if t.hit(x,y):
+                self.target_list.remove(t)
+             
 
