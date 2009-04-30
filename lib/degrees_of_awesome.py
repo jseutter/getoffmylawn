@@ -21,6 +21,9 @@ degrees = {
 class AwesomeRenderer(mode.Renderer):
     bar = pyglet.image.load('resources/achievement_bar.png')
     amsterdam = None
+    star = pyglet.image.load('resources/star.png')
+    lock = pyglet.image.load('resources/lock.png')
+    backdrop = pyglet.image.load('resources/non_gomfl_background.png')
     
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
@@ -30,7 +33,7 @@ class AwesomeRenderer(mode.Renderer):
             self.handler.menu_boxes = []
             for i in range(10):
                 self.handler.menu_boxes.append((50, 700, 
-                    550 - i * BAR_HEIGHT, 550 - (i + 1) * BAR_HEIGHT))
+                    575 - i * BAR_HEIGHT, 575 - (i + 1) * BAR_HEIGHT))
 
     def _blit_bar(self, i):
         offset = 0
@@ -38,16 +41,17 @@ class AwesomeRenderer(mode.Renderer):
             offset = -30
 
         self.bar.blit(50 + offset, 520 - i * BAR_HEIGHT)            
+        self.lock.blit (60 + offset, 523 - i * BAR_HEIGHT)
         pyglet.font.Text(self.amsterdam, 
                          degrees[i+1][0], 
-                         80 + offset, 
+                         120 + offset, 
                          535 - i * BAR_HEIGHT, 
                          color=(0.27,0.125,0,1)).draw()
 
     def on_draw(self):
         self.handler.window.clear()
-        backdrop = pyglet.image.load('resources/non_gomfl_background.png')
-        backdrop.blit(0, 0)
+
+        self.backdrop.blit(0, 0)
         
         for i in range(10):
             self._blit_bar(i)
@@ -55,14 +59,14 @@ class AwesomeRenderer(mode.Renderer):
 class AwesomeMode(mode.Mode):
     name = "awesome"
     renderer = AwesomeRenderer
-    selected = 1
+    selected = 0
     menu_boxes = None
     
     def on_key_press(self, sym, mods):
         if sym == key.ENTER:
             pass
         elif sym == key.DOWN:
-            if self.selected < 10:
+            if self.selected < 9:
                 self.selected += 1
         elif sym == key.UP:
             if self.selected > 0:
@@ -79,7 +83,7 @@ class AwesomeMode(mode.Mode):
                 x < x_max and
                 y > y_min and
                 y < y_max):
-                self.selected = index + 1
+                self.selected = index
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
