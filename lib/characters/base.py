@@ -33,8 +33,8 @@ class Character(object):
     # screen position defaults and setup
     ymax=300
     ymin=275
-    xmax=400
-    xmin=200
+    xmax=775
+    xmin=50
  
     def __init__(self):
         # What path to take and path options
