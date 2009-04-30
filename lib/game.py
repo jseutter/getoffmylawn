@@ -13,6 +13,7 @@ from pyglet.window import mouse
 import mode
 import squirtle
 import config
+
 from common import *
 from constants import *
 

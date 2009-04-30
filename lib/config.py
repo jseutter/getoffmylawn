@@ -99,7 +99,8 @@ profile = False
 local = LocalConfig(
     fullscreen = False,
     width = 800,
-    height = 600
+    height = 600,
+    achievements = [0,0,0,0,0,0,0,0,0,0]
 )
 
 # See the module docstring for details of these methods.
