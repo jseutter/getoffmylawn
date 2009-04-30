@@ -26,7 +26,7 @@ class Character(object):
     is_drawn = False
 
     # The scaling size should be related to the y position
-    scale=0.3
+    scale_multiply=0.003
 
     # Speed and strenght options
     speed=1
@@ -46,6 +46,7 @@ class Character(object):
         self.y = random.randint(self.ymin, self.ymax)
         self.attack_path=self._vector()
         self.angle = random.randint(0, LEN_ANGLES-1)
+        self.scale = (self.ymax - self.y) * self.scale_multiply
         #self.x = 400 
         #self.y = 400
         
@@ -91,6 +92,7 @@ class Character(object):
             self.x = delta[0]
             self.y = delta[1]
             self.angle = (self.angle + 1) % LEN_ANGLES
+            self.scale = (self.ymax - self.y) * self.scale_multiply
         except IndexError:
             pass # no more path
 
