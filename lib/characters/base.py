@@ -8,7 +8,6 @@ import random
 from .squirtle import SVG
 
 ANGLES=[x for x in range(5,-1,-1)] + [x for x in range(359,349,-1)] + [x for x in range(351,360)] + [x for x in range(0,5)]
-LEN_ANGLES=len(ANGLES)
 
 def randomize_number(n):
     ''' A function to mess with a number '''
@@ -57,7 +56,7 @@ class Character(object):
         self.z = self.ZMAX
         self.v = Vector(0,0,-1) # initial motion vector
         self.v.x = [-4, 4][random.randint(0,1)]
-        self.angle = random.randint(0, LEN_ANGLES-1)
+        self.angle = 0 #random.randint(0, len(ANGLES)-1)
         self.curr_view = self.LEFT
         self.speed = speed
         self.strength = strength
@@ -101,17 +100,17 @@ class Character(object):
             self.z += dt * self.v.z * self.speed
         self.y = self.z
         self.x += dt * self.v.x * self.speed
-        self.angle = (self.angle + 1) % LEN_ANGLES
+        self.angle = 0 #(self.angle + 1) % len(ANGLES)
         self.scale = (
                 (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
             ) * (self.ZMAX - self.z) + self.SCALEMIN
-        if(self.curr_view == self.LEFT and self.time_til_switch == 0):
+        if(self.curr_view == self.LEFT and self.time_til_switch <= 0):
             self.curr_view = self.RIGHT
-            self.time_til_switch = random.randint(5,20)
-        elif(self.curr_view == self.RIGHT and self.time_til_switch == 0):
+            self.time_til_switch = 0 #random.randint(5,20)
+        elif(self.curr_view == self.RIGHT and self.time_til_switch <= 0):
             self.curr_view =self.LEFT
-            self.time_til_switch = random.randint(5,20)
-        self.time_til_switch -= 1
+            self.time_til_switch = 0 #random.randint(5,20)
+        self.time_til_switch -= dt
 
     def draw(self):
         getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
