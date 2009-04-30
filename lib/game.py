@@ -119,13 +119,6 @@ class GameMode(mode.Mode):
         for t in self.target_controller.targets:
             oldx = t.x
             t.move(dt)
-            if oldx < t.x:
-                t.current_view = t.LEFT
-            elif oldx > t.x:
-                t.curr_view = t.RIGHT
-            else: # no x motion, just swap the view
-                t.curr_view = t.RIGHT if t.curr_view == t.LEFT else t.LEFT
-            t.current_view = t.LEFT
 
         # Incrementing counters and timers
         self.timestamp+=dt
