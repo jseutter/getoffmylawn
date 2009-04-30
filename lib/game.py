@@ -13,7 +13,6 @@ from pyglet.window import mouse
 import mode
 import squirtle
 import config
-
 from common import *
 from constants import *
 
@@ -85,6 +84,9 @@ class GameMode(mode.Mode):
         run_len=time.time() - self.runtime
         mult = run_len % 3.0
 
+        #if DEBUG:
+        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
+
         create_target = False
         if (self.timestamp > 0.5):
             self.timestamp=0
@@ -119,9 +121,6 @@ class GameMode(mode.Mode):
         self.window.set_mouse_visible(False)
         self.crossHair.x = x
         self.crossHair.y = y
-
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        self.on_mouse_motion(x,y,dx,dy)
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:

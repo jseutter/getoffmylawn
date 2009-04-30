@@ -33,16 +33,16 @@ class Character(object):
     # screen position defaults and setup
     ymax=300
     ymin=275
-    xmax=775
-    xmin=50
+    xmax=400
+    xmin=200
  
     def __init__(self):
         # What path to take and path options
         self.attack_path=self._vector()
-        self.x = random.randint(self.xmin, self.xmax)
-        self.y = random.randint(self.ymin, self.ymax)
-        #self.x = 400 
-        #self.y = 400
+        # self.x = random.randint(self.xmin, self.xmax)
+        # self.y = random.randint(self.ymin, self.ymax)
+        self.x = 400 
+        self.y = 400
 
     def _path1(self):
         """
