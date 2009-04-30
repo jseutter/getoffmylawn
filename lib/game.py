@@ -83,9 +83,6 @@ class GameMode(mode.Mode):
         run_len=time.time() - self.runtime
         mult = run_len % 3.0
 
-        #if DEBUG:
-        #    print "Rate: %s   Multi: %s"%(self.timestamp,mult)
-
         create_target = False
         if (self.timestamp > 0.5):
             self.timestamp=0
