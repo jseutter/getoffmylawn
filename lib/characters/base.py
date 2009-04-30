@@ -67,7 +67,7 @@ class Character(object):
         updates the motion vector
 
         `self.v.x` is updated based on `self.x` location
-        Two main conditions ensure the character to stays in screen.
+        There exists conditions to ensure character is within X-axis limits.
         '''
         if self.x < 75: # Near the border
             self.v.x = 4
