@@ -23,22 +23,22 @@ class TargetController(object):
     MEDIUM='normal'
     HARD='ouch'
 
-    def __init__(self, dificulty='sissy'):
+    def __init__(self, difficulty='sissy'):
         self.targets = []
-        self.dificulty = dificulty
-        if self.dificulty == self.EASY:
+        self.difficulty = difficulty
+        if self.difficulty == self.EASY:
             self.speed = 0.1
             self.strength = 1
             self.speed_multiply = 1.01
             self.release_rate = 3 # ticks
             self.relive_count = 3
-        elif self.dificulty == self.MEDIUM:
+        elif self.difficulty == self.MEDIUM:
             self.speed = 0.5
             self.strength = 2
             self.speed_multiply = 1.05
             self.release_rate = 2 # ticks
             self.relive_count = 5
-        else: #if self.dificulty == self.HARD:
+        else: #if self.difficulty == self.HARD:
             self.speed = 0.8
             self.strength = 3
             self.speed_multiply = 1.1
