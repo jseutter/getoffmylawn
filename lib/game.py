@@ -62,10 +62,14 @@ class GameRenderer(mode.Renderer):
         accuracy = text.Label(
             "Acc: %.0f%%"%(accuracy_value*100),
             font_size=20, color=accuracy_color, x=675, y=520)
+        score = text.Label(
+            "Score %s"%(self.handler.score),
+            font_size=20, color=accuracy_color, x=675, y=495)
 
         hits.draw()
         miss.draw()
         accuracy.draw()
+        score.draw()
 
         if DEBUG:
             debug_label.draw()
@@ -112,6 +116,7 @@ class GameMode(mode.Mode):
         self.timestamp=0
         self.hits=0
         self.miss=0
+        self.score=0
 
     def update(self,dt):
 
@@ -185,5 +190,6 @@ class GameMode(mode.Mode):
 
             if 1 == check_hit:
                 self.hits +=1
+                self.score +=int(y/10)
             else:
                 self.miss +=1
