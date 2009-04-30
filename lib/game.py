@@ -53,16 +53,23 @@ class GameRenderer(mode.Renderer):
         accuracy_color = (int((1 - accuracy_value) * 255), int(accuracy_value * 255), 0, 255)
 
         # TODO: Put some monospace font here
-        label_properties = dict(font_size=20, color=accuracy_color, x=795, anchor_x='right', halign='right')
-        hits = text.Label("%s [    Hits]"%(self.handler.hits), y=570, **label_properties)
-        miss = text.Label("%s [   Miss]"%(self.handler.miss), y=545, **label_properties)
-        accuracy = text.Label("%.0f%% [    Acc]"%(accuracy_value*100), y=520, **label_properties)
-        score = text.Label("%s [ Score]"%(self.handler.score), y=495, **label_properties)
+        labels = []
+        label_properties = dict(font_size=20, color=accuracy_color, anchor_x='right', halign='right')
+        y = 595
+        for l,v in [
+            ('Hits', str(self.handler.hits)),
+            ('Miss', str(self.handler.miss)), 
+            ('Acc', '%.0f%%' %(accuracy_value*100)), 
+            ('Score', str(self.handler.score))]:
+            y -= 25
+            labels.append(text.Label(l, x=795, y=y, **label_properties))
+            labels.append(text.Label(v, x=700, y=y, **label_properties))
+            # Trying to use the glyphs, to uncomment these you must mess with label_prop
+            # labels.append(font.Text(self.amsterdam, l, x=795, y=y, **label_properties))
+            # labels.append(font.Text(self.amsterdam, v, x=750, y=y, **label_properties))
 
-        hits.draw()
-        miss.draw()
-        accuracy.draw()
-        score.draw()
+        for l in labels: 
+            l.draw()
 
         if DEBUG:
             debug_label.draw()
