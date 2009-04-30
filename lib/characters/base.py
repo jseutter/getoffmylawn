@@ -43,33 +43,6 @@ class Character(object):
         self.attack_path=self._vector()
         #self.x = 400 
         #self.y = 400
-
-    def _path1(self):
-        """
-        Path 1 course
-        """
-        var_pos=[]
-        for seq in range(1,800):
-            var_pos.append((int(math.sin(seq)*-30), random.randint(0,2)))
-        return var_pos
-        
-    def _path2(self):
-        """
-        Path 2 course
-        """
-        var_pos=[]
-        for seq in range(1,800):
-            var_pos.append((int(math.cos(seq)*50), random.randint(0,2)))
-        return var_pos
-       
-    def _path3(self):
-        """
-        Path 3 course
-        """
-        var_pos=[]
-        for seq in range(1,800):
-            var_pos.append((int(math.cos(seq)*35), random.randint(0,2)))
-        return var_pos
         
     def _vector(self):
         """

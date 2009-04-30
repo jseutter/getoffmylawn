@@ -35,6 +35,12 @@ class GameRenderer(mode.Renderer):
         self.handler.crossHair.draw()
         game_label.draw()
 
+        hits = text.Label("Hits:  %s"%(self.handler.hits),font_size=20,x=700,y=570)
+        miss = text.Label("Miss: %s"%(self.handler.miss),font_size=20,x=700,y=545)
+        
+        hits.draw()
+        miss.draw()
+        
         if DEBUG:
             debug_label.draw()
 
@@ -63,6 +69,8 @@ class GameMode(mode.Mode):
         self.target_list=[]
         self.runtime=time.time()
         self.timestamp=0
+        self.hits=0
+        self.miss=0
 
     def update(self,dt):
 
@@ -127,8 +135,16 @@ class GameMode(mode.Mode):
             print "Pressed left mouse button (%s, %s)" %(x,y)
             
         # Check targets
+        check_hit=0
         for t in self.target_list:
             if t.hit(x,y):
                 self.target_list.remove(t)
+                check_hit=1
+                break
+          
+        if 1 == check_hit:
+            self.hits +=1
+        else:
+            self.miss +=1
              
 
