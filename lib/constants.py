@@ -28,7 +28,7 @@ CONFIG_FILE = "local.py"
 
 #: The caption that appears at the top of the window. Obviously this is only
 #: visible in windowed mode.
-CAPTION = u"My Game"
+CAPTION = u"GOMFL"
 
 #: The "top-level" tick rate; the maximum number of times per second that the
 #: controller will call its tick method.
@@ -47,4 +47,3 @@ MENU_IMAGE_WIDTH = 600
 
 #: Degrees of Awesome
 BAR_HEIGHT = 55 
-

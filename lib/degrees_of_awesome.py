@@ -1,4 +1,5 @@
 import mode
+import config
 from pyglet.window import key
 from constants import *
 from pyglet.event import EVENT_HANDLED
@@ -40,8 +41,13 @@ class AwesomeRenderer(mode.Renderer):
         if (i == self.handler.selected):
             offset = -30
 
-        self.bar.blit(50 + offset, 520 - i * BAR_HEIGHT)            
-        self.lock.blit (60 + offset, 523 - i * BAR_HEIGHT)
+        self.bar.blit(50 + offset, 520 - i * BAR_HEIGHT)
+
+        if (self.handler.achievements[i] == 1):
+            self.star.blit (60 + offset, 523 - i * BAR_HEIGHT)
+        else:    
+            self.lock.blit (60 + offset, 523 - i * BAR_HEIGHT)
+            
         pyglet.font.Text(self.amsterdam, 
                          degrees[i+1][0], 
                          120 + offset, 
@@ -61,6 +67,7 @@ class AwesomeMode(mode.Mode):
     renderer = AwesomeRenderer
     selected = 0
     menu_boxes = None
+    achievements = config.achievements
     
     def on_key_press(self, sym, mods):
         if sym == key.ENTER:
