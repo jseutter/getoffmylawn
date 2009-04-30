@@ -57,8 +57,8 @@ class GameRenderer(mode.Renderer):
         self.handler.crossHair.draw()
 
         #Move existing targets if any
-        for t in self.handler.target_list:
-            t.draw()
+        for t in range(len(self.handler.target_list)):
+            self.handler.target_list[-t-1].draw()
 
         # Show achievement unlocked
         if (self.handler.achievement_counter):
