@@ -49,10 +49,11 @@ class Character(object):
         Plot course
         """
         var_pos=[]
+        x_pos=self.x
+        y_pos=self.y
+            
         if self.x < 75:
             #Move diag left to righ
-            x_pos=self.x
-            y_pos=self.y
             for i in range(1,800):
                 x_pos += 1
                 y_pos -= 1
@@ -61,24 +62,27 @@ class Character(object):
                 
         if self.x > 725:
             #Move diag left to righ
-            x_pos=self.x
-            y_pos=self.y
             for i in range(1,800):
                 x_pos -= 1
                 y_pos -= 1
                 var_pos.append([x_pos,y_pos])
             return var_pos
             
-        x_pos=self.x
-        y_pos=self.y
+        x_var = 5 
+        counter = 0
         for i in range(1,800):
             y_pos -= 1
+            
+            if counter < x_var:
+                x_pos += 1
+                counter += 1
+            
+            if counter == 0:
+                x_pos -= 1
+                counter -= 1
+                
             var_pos.append([x_pos,y_pos])
         return var_pos
-            
-        vector_opt=(self._path1,self._path2,self._path3)     
-        c = random.randint(0,(len(vector_opt)-1))
-        return vector_opt[c]()
 
     def move(self):
         try:
