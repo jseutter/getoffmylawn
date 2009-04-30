@@ -53,18 +53,11 @@ class GameRenderer(mode.Renderer):
         accuracy_color = (int((1 - accuracy_value) * 255), int(accuracy_value * 255), 0, 255)
 
         # TODO: Put some monospace font here
-        hits = text.Label(
-            "Hits:  %s"%(self.handler.hits),
-            font_size=20, color=accuracy_color, x=675, y=570)
-        miss = text.Label(
-            "Miss: %s"%(self.handler.miss),
-            font_size=20, color=accuracy_color, x=675, y=545)
-        accuracy = text.Label(
-            "Acc: %.0f%%"%(accuracy_value*100),
-            font_size=20, color=accuracy_color, x=675, y=520)
-        score = text.Label(
-            "Score %s"%(self.handler.score),
-            font_size=20, color=accuracy_color, x=675, y=495)
+        label_properties = dict(font_size=20, color=accuracy_color, x=795, anchor_x='right', halign='right')
+        hits = text.Label("%s [    Hits]"%(self.handler.hits), y=570, **label_properties)
+        miss = text.Label("%s [   Miss]"%(self.handler.miss), y=545, **label_properties)
+        accuracy = text.Label("%.0f%% [    Acc]"%(accuracy_value*100), y=520, **label_properties)
+        score = text.Label("%s [ Score]"%(self.handler.score), y=495, **label_properties)
 
         hits.draw()
         miss.draw()
@@ -126,13 +119,6 @@ class GameMode(mode.Mode):
         for t in self.target_controller.targets:
             oldx = t.x
             t.move(dt)
-            if oldx < t.x:
-                t.current_view = t.LEFT
-            elif oldx > t.x:
-                t.curr_view = t.RIGHT
-            else: # no x motion, just swap the view
-                t.curr_view = t.RIGHT if t.curr_view == t.LEFT else t.LEFT
-            t.current_view = t.LEFT
 
         # Incrementing counters and timers
         self.timestamp+=dt
