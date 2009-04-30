@@ -4,6 +4,7 @@ from pyglet.window import key
 from constants import *
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
+from pyglet.window import mouse
 import pyglet
 
 degrees = {
@@ -20,6 +21,7 @@ degrees = {
 }
 
 achievements = config.achievements
+new_achievements = []
 
 def unlock(degree):
     if (achievements[degree - 1] == 1):
@@ -27,6 +29,7 @@ def unlock(degree):
     else:
         achievements[degree - 1] = 1
         config.save_option('achievements', achievements)
+        new_achievements.append(degrees(degree))
 
 class AwesomeRenderer(mode.Renderer):
     bar = pyglet.image.load('resources/achievement_bar.png')
@@ -34,6 +37,7 @@ class AwesomeRenderer(mode.Renderer):
     star = pyglet.image.load('resources/star.png')
     lock = pyglet.image.load('resources/lock.png')
     backdrop = pyglet.image.load('resources/non_gomfl_background.png')
+    dialog = pyglet.image.load('resources/achievement_dialog.png')
     
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
@@ -53,7 +57,7 @@ class AwesomeRenderer(mode.Renderer):
         self.bar.blit(50 + offset, 520 - i * BAR_HEIGHT)
 
         if (self.handler.achievements[i] == 1):
-            self.star.blit (60 + offset, 523 - i * BAR_HEIGHT)
+            self.star.blit (60 + offset, 519 - i * BAR_HEIGHT)
         else:    
             self.lock.blit (60 + offset, 523 - i * BAR_HEIGHT)
             
@@ -70,6 +74,10 @@ class AwesomeRenderer(mode.Renderer):
         
         for i in range(10):
             self._blit_bar(i)
+            
+        if (not self.handler.displayed_degree is None):
+            self.dialog.blit(0, 0)
+            
 
 class AwesomeMode(mode.Mode):
     name = "awesome"
@@ -77,10 +85,14 @@ class AwesomeMode(mode.Mode):
     selected = 0
     menu_boxes = None
     achievements = config.achievements
+    displayed_degree = None
     
     def on_key_press(self, sym, mods):
         if sym == key.ENTER:
-            pass
+            if(self.displayed_degree):
+                self.displayed_degree = None
+            else:
+                self.displayed_degree = self.selected
         elif sym == key.DOWN:
             if self.selected < 9:
                 self.selected += 1
@@ -88,7 +100,10 @@ class AwesomeMode(mode.Mode):
             if self.selected > 0:
                 self.selected -= 1
         elif key.ESCAPE:
-            self.control.switch_handler("menu")
+            if(self.displayed_degree):
+                self.displayed_degree = None
+            else:
+                self.control.switch_handler("menu")
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
@@ -103,4 +118,7 @@ class AwesomeMode(mode.Mode):
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
-            pass        
+            if(self.displayed_degree):
+                self.displayed_degree = None
+            else:
+                self.displayed_degree = self.selected
