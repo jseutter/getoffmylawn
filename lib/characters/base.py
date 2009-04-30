@@ -106,7 +106,7 @@ class Character(object):
             ) * (self.ZMAX - self.z) + self.SCALEMIN
         if self.time_til_switch <= 0:
             self.curr_view = self.RIGHT if self.curr_view == self.LEFT else self.LEFT
-            self.time_til_switch = 0 #random.randint(5,20)
+            self.time_til_switch = 10 #random.randint(5,20)
         self.time_til_switch -= dt
 
     def draw(self):
