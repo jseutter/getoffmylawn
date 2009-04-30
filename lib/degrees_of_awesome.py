@@ -30,7 +30,7 @@ class AwesomeRenderer(mode.Renderer):
             self.handler.menu_boxes = []
             for i in range(10):
                 self.handler.menu_boxes.append((50, 700, 
-                            550 - i * BAR_HEIGHT, 550 - (i + 1) * BAR_HEIGHT))
+                    550 - i * BAR_HEIGHT, 550 - (i + 1) * BAR_HEIGHT))
 
     def _blit_bar(self, i):
         offset = 0
