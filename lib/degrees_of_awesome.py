@@ -18,7 +18,7 @@ degrees = {
     7 : ('Seveth Achievement', "Get this by being awesome"),
     8 : ('Eighth Achievement', "Get this by being awesome"),
     9 : ('Nineth Achievement', "Get this by being awesome"),
-    10 : ('Tenth Achievement', "Get this by being awesome")
+    10 : ('Open Source', "Anyone that has got this far, can probably figure out how to unlock this achievement")
 }
 
 achievements = config.achievements
@@ -83,7 +83,7 @@ class AwesomeRenderer(mode.Renderer):
             self.dialog.blit(0, 0)
             font.Text(self.amsterdam,
                       degrees[self.handler.displayed_degree + 1][0],
-                      300,
+                      250,
                       400,
                       width=300,
                       color=(0.27,0.125,0,1)).draw()
@@ -92,7 +92,7 @@ class AwesomeRenderer(mode.Renderer):
                     degrees[self.handler.displayed_degree + 1][1],
                     225,
                     350,
-                    width=400,
+                    width=350,
                     color=(0.27,0.125,0,1)).draw()
                       
 
