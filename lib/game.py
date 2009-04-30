@@ -83,7 +83,7 @@ class GameRenderer(mode.Renderer):
         elif (degrees_of_awesome.new_achievements):
             degree_text = degrees_of_awesome.new_achievements.pop()
             self._blit_degree_unlocked("You Rock, Your Degree of Awesomeness has increased")
-            self.handler.achievement_counter = 100
+            self.handler.achievement_counter = 200
 
     def _blit_degree_unlocked(self, text):
         font.Text(self.amsterdam,
@@ -146,11 +146,6 @@ class GameMode(mode.Mode):
             for i in range(count):
                 if (len(self.target_controller.targets) < MAX_TARGETS):
                     self.target_controller.generate_target(run_len)
-
-            if (len(self.target_controller.targets) == 5):
-                degrees_of_awesome.unlock(1)
-                if DEBUG:
-                    print "fired"
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:

@@ -3,8 +3,11 @@ Gomfl Enemies
 '''
 
 from base import Character, create_svg
+import degrees_of_awesome
 
 class Ninja(Character):
+    total_killed = 0
+    
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.right = create_svg('ninja.svg')
@@ -29,6 +32,9 @@ class Ninja(Character):
         
         if (x > lx and x < tx and
             y > ly and y < ty):
+            Ninja.total_killed += 1
+            if (Ninja.total_killed == 100):
+                degrees_of_awesome.unlock(2)
             return 1
         return 0
         
