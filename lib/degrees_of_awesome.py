@@ -11,8 +11,8 @@ from pyglet import font
 degrees = {
     1 : ('Starting Out', "Got the Game Running"),
     2 : ('Killah', "Killed 100 Ninjas"),
-    3 : ('Third Achievement', "Get this by being awesome"),
-    4 : ('Fourth Achievement', "Get this by being awesome"),
+    3 : ('Lazy Eye', "5 Hits in a Row"),
+    4 : ('Dead Eye', "100 Hits in a Row"),
     5 : ('Fifth Achievement', "Get this by being awesome"),
     6 : ('Sixth Achievement', "Get this by being awesome"),
     7 : ('Seveth Achievement', "Get this by being awesome"),

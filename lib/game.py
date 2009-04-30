@@ -103,6 +103,8 @@ class GameMode(mode.Mode):
     background = None
     angle = 0
     achievement_counter = None
+    in_a_row = 0
+    
     def __init__(self):
         mode.Mode.__init__(self)
         squirtle.setup_gl()
@@ -185,6 +187,13 @@ class GameMode(mode.Mode):
 
             if 1 == check_hit:
                 self.hits +=1
+                self.in_a_row += 1
                 self.score +=int(y/10)
+                
+                if(self.in_a_row == 5):
+                    degrees_of_awesome.unlock(3)
+                if(self.in_a_row == 100):
+                    degrees_of_awesome.unlock(4)
             else:
+                self.in_a_row = 0
                 self.miss +=1
