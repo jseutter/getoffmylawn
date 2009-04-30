@@ -36,6 +36,7 @@ def unlock(degree):
 class AwesomeRenderer(mode.Renderer):
     bar = image.load('resources/achievement_bar.png')
     amsterdam = None
+    amsterdam_detail = None
     star = image.load('resources/star.png')
     lock = image.load('resources/lock.png')
     backdrop = image.load('resources/non_gomfl_background.png')
@@ -45,6 +46,7 @@ class AwesomeRenderer(mode.Renderer):
         mode.Renderer.__init__(self, handler)
         font.add_file('resources/amsterdam.ttf')
         self.amsterdam = font.load('Amsterdam Graffiti', 45)
+        self.amsterdam_detail = font.load('Amsterdam Graffiti', 24)
         if(not self.handler.menu_boxes):
             self.handler.menu_boxes = []
             for i in range(10):
@@ -79,6 +81,21 @@ class AwesomeRenderer(mode.Renderer):
             
         if (not self.handler.displayed_degree is None):
             self.dialog.blit(0, 0)
+            font.Text(self.amsterdam,
+                      degrees[self.handler.displayed_degree + 1][0],
+                      300,
+                      400,
+                      width=300,
+                      color=(0.27,0.125,0,1)).draw()
+            font.Text(self.amsterdam_detail,
+                    #degrees[self.handler.displayed_degree + 1][0],
+                    degrees[self.handler.displayed_degree + 1][1],
+                    225,
+                    350,
+                    width=400,
+                    color=(0.27,0.125,0,1)).draw()
+                      
+
             
 
 class AwesomeMode(mode.Mode):
