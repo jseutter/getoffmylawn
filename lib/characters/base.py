@@ -113,4 +113,4 @@ class Character(object):
         self.time_til_switch -= dt
 
     def draw(self):
-        getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
+        getattr(self, self.curr_view).draw(self.x, self.y, angle=self.angle, scale=self.scale)
