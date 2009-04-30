@@ -30,10 +30,11 @@ class Character(object):
     ''' A generic GOMFL character '''
 
     # screen position defaults and setup
-    SCALEMAX = 1.3
+    SCALEMAX = 1.7
     SCALEMIN = 0.03
     ZMAX = 300
     ZMIN = 0
+    ZBUFFER = 50 # allow things to go this much off screen (Z-Axis)
 
     # Look and feel
     LEFT = 'left'
@@ -95,9 +96,10 @@ class Character(object):
         ''' updates location based on time elapsed `t` '''
         dt *= 100 # time increment is normally quite small
         self._update_vector()
-        self.z += dt * self.v.z * self.speed
+        if self.z > self.ZMIN - self.ZBUFFER:
+            self.z += dt * self.v.z * self.speed
         self.y = self.z
-        self.x += dt * self.v.x
+        self.x += dt * self.v.x * self.speed
         self.angle = (self.angle + 1) % LEN_ANGLES
         self.scale = (
                 (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
