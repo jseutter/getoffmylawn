@@ -147,9 +147,6 @@ class GameMode(mode.Mode):
                 if (len(self.target_controller.targets) < MAX_TARGETS):
                     self.target_controller.generate_target(run_len)
 
-            if DEBUG:
-                print "Creating target"
-
             if (len(self.target_controller.targets) == 5):
                 degrees_of_awesome.unlock(1)
                 if DEBUG:
