@@ -9,7 +9,6 @@ class Ninja(Character):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.right = create_svg('ninja.svg')
         self.left = create_svg('ninja.svg')
-        #print dir(self.right)
         #self.dead = None 
 
     def hit(self, x, y):

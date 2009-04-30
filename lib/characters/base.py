@@ -29,8 +29,6 @@ class Vector(object):
 class Character(object):
     ''' A generic GOMFL character '''
 
-    name = "Target"
-
     # screen position defaults and setup
     SCALEMAX = 1.3
     SCALEMIN = 0.03
@@ -61,6 +59,7 @@ class Character(object):
         self.curr_view = self.LEFT
         self.speed = speed
         self.strength = strength
+        self.name = self.__class__.__name__
 
     def _update_vector(self):
         '''

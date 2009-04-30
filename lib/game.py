@@ -115,8 +115,8 @@ class GameMode(mode.Mode):
 
     def update(self,dt):
 
+        # Moving Targets
         for t in self.target_controller.targets:
-            #print "Moving target"
             oldx = t.x
             t.move(dt)
             if oldx < t.x:
@@ -151,8 +151,9 @@ class GameMode(mode.Mode):
                 print "Creating target"
 
             if (len(self.target_controller.targets) == 5):
-                print "fired"
                 degrees_of_awesome.unlock(1)
+                if DEBUG:
+                    print "fired"
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
@@ -172,17 +173,20 @@ class GameMode(mode.Mode):
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
-            print "Pressed left mouse button (%s, %s)" %(x,y)
+            if DEBUG:
+                print "Pressed left mouse button (%s, %s)" %(x,y)
 
-        # Check targets
-        check_hit=0
-        for t in self.target_controller.targets:
-            if t.hit(x,y):
-                self.target_controller.targets.remove(t)
-                check_hit=1
-                break
+            # Check targets for hit
+            check_hit=0
+            for t in reversed(self.target_controller.targets):
+                if t.hit(x,y):
+                    self.target_controller.targets.remove(t)
+                    check_hit=1
+                    if DEBUG:
+                        print t.name, '(%.f, %.f)'%(t.x, t.y), 'killed. Success!'
+                    break
 
-        if 1 == check_hit:
-            self.hits +=1
-        else:
-            self.miss +=1
+            if 1 == check_hit:
+                self.hits +=1
+            else:
+                self.miss +=1
