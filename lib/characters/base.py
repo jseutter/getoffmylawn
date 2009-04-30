@@ -38,9 +38,9 @@ class Character(object):
  
     def __init__(self):
         # What path to take and path options
-        self.attack_path=self._vector()
         self.x = random.randint(self.xmin, self.xmax)
         self.y = random.randint(self.ymin, self.ymax)
+        self.attack_path=self._vector()
         #self.x = 400 
         #self.y = 400
 
@@ -75,15 +75,43 @@ class Character(object):
         """
         Plot course
         """
+        var_pos=[]
+        if self.x < 75:
+            #Move diag left to righ
+            x_pos=self.x
+            y_pos=self.y
+            for i in range(1,800):
+                x_pos += 1
+                y_pos -= 1
+                var_pos.append([x_pos,y_pos])
+            return var_pos
+                
+        if self.x > 725:
+            #Move diag left to righ
+            x_pos=self.x
+            y_pos=self.y
+            for i in range(1,800):
+                x_pos -= 1
+                y_pos -= 1
+                var_pos.append([x_pos,y_pos])
+            return var_pos
+            
+        x_pos=self.x
+        y_pos=self.y
+        for i in range(1,800):
+            y_pos -= 1
+            var_pos.append([x_pos,y_pos])
+        return var_pos
+            
         vector_opt=(self._path1,self._path2,self._path3)     
         c = random.randint(0,(len(vector_opt)-1))
         return vector_opt[c]()
 
     def move(self):
         try:
-            delta = self.attack_path.pop()
-            self.x -= delta[0]
-            self.y -= delta[1]
+            delta = self.attack_path.pop(0)
+            self.x = delta[0]
+            self.y = delta[1]
         except IndexError:
             pass # no more path
 
