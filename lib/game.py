@@ -34,9 +34,9 @@ class GameRenderer(mode.Renderer):
     amsterdam = None
 
     def __init__(self, handler):
-         mode.Renderer.__init__(self, handler)
-         font.add_file('resources/amsterdam.ttf')
-         self.amsterdam = font.load('Amsterdam Graffiti', 24)
+        mode.Renderer.__init__(self, handler)
+        font.add_file('resources/amsterdam.ttf')
+        self.amsterdam = font.load('Amsterdam Graffiti', 24)
 
     def on_draw(self):
         self.handler.window.clear()
