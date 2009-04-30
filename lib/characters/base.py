@@ -33,8 +33,8 @@ class Character(object):
     # screen position defaults and setup
     ymax=300
     ymin=275
-    xmax=775
-    xmin=50
+    xmax=400
+    xmin=200
  
     def __init__(self):
         # What path to take and path options
@@ -116,7 +116,7 @@ class Character(object):
             pass # no more path
 
     def draw(self):
-        getattr(self, self.curr_view).draw(self.x, self.y, angle=45, scale=self.scale)
+        getattr(self, self.curr_view).draw(self.x, self.y, angle=0, scale=self.scale)
 
 
 def create_svg(file_name, anchor_x='center', anchor_y='bottom'):

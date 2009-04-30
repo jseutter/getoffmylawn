@@ -19,6 +19,15 @@ degrees = {
     10 : ('Tenth Achievement', "Get this by being awesome")
 }
 
+achievements = config.achievements
+
+def unlock(degree):
+    if (achievements[degree - 1] == 1):
+        pass #already unlocked
+    else:
+        achievements[degree - 1] = 1
+        config.save_option('achievements', achievements)
+
 class AwesomeRenderer(mode.Renderer):
     bar = pyglet.image.load('resources/achievement_bar.png')
     amsterdam = None
