@@ -1,0 +1,42 @@
+Get Off My F@!#$%%@ Lawn
+========================
+
+Summary: An Awesome spin on the first person shooter.
+
+In this game you have to hold the fort by protecting your lawn from
+oncoming Ninjas, Rabbits, ..., and ... . After beating the first few
+levels you get to play the big boss `Sample.SVG`.
+
+How To Play?
+------------
+
+This game is intense and requires strong mouse maneuvering skills. To
+get high scores, point your cursor at the enemy and left click to click
+them. Make sure to get them the enemies your precious lawn ASAP or they
+will destroy it.
+
+Dependencies
+-------------
+
+This game has the following dependencies:
+
+    * python 2.5 or 2.6                 http://www.python.org
+    * pyglet-1.1.3 (or compatible)      http://www.pyglet.org
+    * avbin                             http://code.google.com/p/avbin/
+
+Starting the Game
+-----------------
+
+After installing the above dependencies, decompress this game archive.
+In a terminal change to the game directory, where the file run_game.py
+is sitting. Then type:
+
+    python run_game.py
+
+To run the game in debug mode, run:
+
+    python test_game.py
+
+
+ENJOY!
+GOMFL Entertainment.
