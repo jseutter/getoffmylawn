@@ -1,0 +1,7 @@
+DEPENDENCIES:
+
+pyglet: http://www.pyglet.org/
+avbin: http://code.google.com/p/avbin/
+
+# To get going:
+$ python run_game.py 
