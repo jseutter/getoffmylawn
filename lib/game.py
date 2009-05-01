@@ -133,7 +133,7 @@ class GameMode(mode.Mode):
 
         # checking: should we create target(s)
         create_target = False
-        if (self.timestamp > self.target_controller.release_rate):
+        if (self.timestamp > self.target_controller.release_int):
             self.timestamp=0
             create_target = True
         if create_target:
