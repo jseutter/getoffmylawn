@@ -94,26 +94,27 @@ class Character(object):
 
     def move(self, dt):
         ''' updates location based on time elapsed `t` '''
-        dt *= 100 # time increment is normally quite small
-        self._update_vector()
-        if self.z > self.ZMIN - self.ZBUFFER:
-            self.z += dt * self.v.z * self.speed
-        self.y = self.z
-        self.x += dt * self.v.x * self.speed
-        self.angle = 0 #(self.angle + 1) % len(ANGLES)
-        self.scale = (
-                (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
-            ) * (self.ZMAX - self.z) + self.SCALEMIN
-        if(self.curr_view == self.LEFT and self.time_til_switch <= 0):
-            self.curr_view = self.RIGHT
-            self.time_til_switch = random.randint(10,20)
-        elif(self.curr_view == self.RIGHT and self.time_til_switch <= 0):
-            self.curr_view =self.LEFT
-            self.time_til_switch = random.randint(10,20)
-        if self.time_til_switch <= 0:
-            self.curr_view = self.RIGHT if self.curr_view == self.LEFT else self.LEFT
-            self.time_til_switch = 10 #random.randint(5,20)
-        self.time_til_switch -= dt
-
+        if (not self.curr_view == self.DEAD):
+            dt *= 100 # time increment is normally quite small
+            self._update_vector()
+            if self.z > self.ZMIN - self.ZBUFFER:
+                self.z += dt * self.v.z * self.speed
+            self.y = self.z
+            self.x += dt * self.v.x * self.speed
+            self.angle = 0 #(self.angle + 1) % len(ANGLES)
+            self.scale = (
+                    (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
+                ) * (self.ZMAX - self.z) + self.SCALEMIN
+            if(self.curr_view == self.LEFT and self.time_til_switch <= 0):
+                self.curr_view = self.RIGHT
+                self.time_til_switch = random.randint(10,20)
+            elif(self.curr_view == self.RIGHT and self.time_til_switch <= 0):
+                self.curr_view =self.LEFT
+                self.time_til_switch = random.randint(10,20)
+            if self.time_til_switch <= 0:
+                self.curr_view = self.RIGHT if self.curr_view == self.LEFT else self.LEFT
+                self.time_til_switch = 10 #random.randint(5,20)
+            self.time_til_switch -= dt
+        
     def draw(self):
         getattr(self, self.curr_view).draw(self.x, self.y, angle=self.angle, scale=self.scale)

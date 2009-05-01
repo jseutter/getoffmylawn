@@ -27,6 +27,7 @@ class TargetController(object):
 
     def __init__(self, difficulty='sissy'):
         self.targets = []
+        self.hit=0
         self.difficulty = difficulty
         if self.difficulty == self.EASY:
             self.speed = 0.1
@@ -60,3 +61,5 @@ class TargetController(object):
         if DEBUG:
             print 'Target Created with Speed: %.2f Using Mult: %.2f' %(
                     self.speed*multiplier, multiplier)
+
+        

@@ -4,6 +4,7 @@ Gomfl Enemies
 
 from base import Character, create_svg
 import degrees_of_awesome
+from pyglet import clock
 
 class Ninja(Character):
     total_killed = 0
@@ -13,7 +14,9 @@ class Ninja(Character):
         self.right = create_svg('ninja_right.svg')
         self.left = create_svg('ninja.svg')
         self.dead = create_svg('ninja_death.svg') 
-
+        self.is_dead = 0  
+        self.deadtime = 0
+        
     def hit(self, x, y):
         """
         Return 1 if the target is hit by a bullet at x,y
@@ -38,6 +41,11 @@ class Ninja(Character):
             return 1
         return 0
         
-
+    def sepuku(self):
+        """ we must now die honorably like a true samurai"""
+        self.is_dead = 1
+        self.curr_view = self.DEAD
+        
+        
 # A list of enemies
 ENEMIES = [Ninja, ]

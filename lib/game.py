@@ -28,7 +28,7 @@ import time
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
-MAX_TARGETS = 100
+MAX_TARGETS = 1
 
 class GameRenderer(mode.Renderer):
     amsterdam = None
@@ -42,9 +42,7 @@ class GameRenderer(mode.Renderer):
         self.handler.window.clear()
 
         self.handler.background.draw(0,0,z=0.5)
-        self.handler.crossHair.draw()
-        #game_label.draw()
-
+        
         # Stats Calc
         try:
             accuracy_value = self.handler.hits / (self.handler.hits + self.handler.miss)
@@ -125,7 +123,13 @@ class GameMode(mode.Mode):
         # Moving Targets
         for t in self.target_controller.targets:
             oldx = t.x
-            t.move(dt)
+            if (not t.is_dead):
+                t.move(dt)
+            else:
+                # only if 3 secs have pass
+                t.deadtime+=dt
+                if (t.deadtime > 3):
+                    self.target_controller.targets.remove(t)
 
         # Incrementing counters and timers
         self.timestamp+=dt
@@ -136,6 +140,8 @@ class GameMode(mode.Mode):
         if (self.timestamp > self.target_controller.release_rate):
             self.timestamp=0
             create_target = True
+            
+        
         if create_target:
             # K Were supposed to create target(s)
             count = 1
@@ -171,8 +177,8 @@ class GameMode(mode.Mode):
             # Check targets for hit
             check_hit=0
             for t in self.target_controller.targets:
-                if t.hit(x,y):
-                    self.target_controller.targets.remove(t)
+                if not t.is_dead and t.hit(x,y):
+                    t.sepuku()
                     check_hit=1
                     if DEBUG:
                         print t.name, '(%.f, %.f)'%(t.x, t.y), 'killed. Success!'
