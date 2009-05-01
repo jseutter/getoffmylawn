@@ -6,6 +6,7 @@ import os.path
 
 from pyglet import text
 from pyglet import font
+from pyglet import image
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
@@ -32,15 +33,16 @@ MAX_TARGETS = 100
 
 class GameRenderer(mode.Renderer):
     amsterdam = None
+    degree_text = None
+    achievement_popup = squirtle.SVG("resources/achievement_popup.svg")
 
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
         font.add_file('resources/amsterdam.ttf')
-        self.amsterdam = font.load('Amsterdam Graffiti', 24)
+        self.amsterdam = font.load('Amsterdam Graffiti', 45)
 
     def on_draw(self):
-        self.handler.window.clear()
-
+        self.handler.window.clear() 
         self.handler.background.draw(0,0,z=0.5)
         
         # Stats Calc
@@ -81,18 +83,24 @@ class GameRenderer(mode.Renderer):
         # Show achievement unlocked
         if (self.handler.achievement_counter):
             self.handler.achievement_counter -= 1
-            self._blit_degree_unlocked("You Rock, Your Degree of Awesomeness has increased")
+            self._blit_degree_unlocked(self.degree_text)
         elif (degrees_of_awesome.new_achievements):
-            degree_text = degrees_of_awesome.new_achievements.pop()
-            self._blit_degree_unlocked("You Rock, Your Degree of Awesomeness has increased")
-            self.handler.achievement_counter = 200
+            self.degree_text = degrees_of_awesome.new_achievements.pop()[0]
+            self._blit_degree_unlocked(self.degree_text)
+            self.handler.achievement_counter = 175
 
     def _blit_degree_unlocked(self, text):
+        self.achievement_popup.draw(500, 50)
+        font.Text(self.amsterdam,
+                     "Unlocked:",
+                     525,
+                     120,
+                     color=(0.27,0.125,0,1)).draw()
         font.Text(self.amsterdam,
                      text,
-                     100,
-                     300,
-                     color=(0.9,0.1,0.1,1)).draw()
+                     525,
+                     75,
+                     color=(0.27,0.125,0,1)).draw()
 
 class GameMode(mode.Mode):
     name = "game"
