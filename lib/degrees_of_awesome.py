@@ -7,6 +7,8 @@ from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import mouse
 from pyglet import image
 from pyglet import font
+from pyglet.media import StaticSource
+from pyglet.media import load
 
 degrees = {
     1 : ('Starting Out', "Got the Game Running"),
@@ -23,12 +25,12 @@ degrees = {
 
 achievements = config.achievements
 new_achievements = []
-
+achievement_sound =  StaticSource(load('resources/sounds/drop.ogg'))
 def unlock(degree):
     if (achievements[degree - 1] == 1):
         pass #already unlocked
     else:
-        print "Unlocking?"
+        achievement_sound.play()
         achievements[degree - 1] = 1
         config.save_option('achievements', achievements)
         new_achievements.append(degrees[degree])

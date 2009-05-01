@@ -11,8 +11,6 @@ from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
 from pyglet.window import mouse
-from pyglet.media import StaticSource
-from pyglet.media import load
 
 import mode
 import squirtle
@@ -37,7 +35,6 @@ class GameRenderer(mode.Renderer):
     amsterdam = None
     degree_text = None
     achievement_popup = squirtle.SVG("resources/achievement_popup.svg")
-    achievement_sound =  StaticSource(load('resources/sounds/drop.ogg'))
 
     def __init__(self, handler):
         mode.Renderer.__init__(self, handler)
@@ -89,7 +86,6 @@ class GameRenderer(mode.Renderer):
             self._blit_degree_unlocked(self.degree_text)
         elif (degrees_of_awesome.new_achievements):
             self.degree_text = degrees_of_awesome.new_achievements.pop()[0]
-            self.achievement_sound.play()
             self._blit_degree_unlocked(self.degree_text)
             self.handler.achievement_counter = 75
 
