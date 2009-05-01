@@ -25,6 +25,10 @@ from CrossHair import CrossHair
 # targets is the target class
 from targets import TargetController
 import time
+import random
+
+from pyglet.media import StaticSource
+from pyglet.media import load
 
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
@@ -113,6 +117,10 @@ class GameMode(mode.Mode):
     angle = 0
     achievement_counter = None
     in_a_row = 0
+    gunshot = StaticSource(load('resources/sounds/gunshot.ogg'))
+    hlaugh = StaticSource(load('resources/sounds/horrible_laugh.ogg'))
+
+    ninja_death=[StaticSource(load('resources/sounds/ninja_death_1.ogg')),StaticSource(load('resources/sounds/ninja_death_2.ogg')),StaticSource(load('resources/sounds/ninja_death_3.ogg'))]
 
     def __init__(self):
         mode.Mode.__init__(self)
@@ -128,6 +136,8 @@ class GameMode(mode.Mode):
         self.hits=0
         self.miss=0
         self.score=0
+
+        GameMode.hlaugh.play()
 
     def update(self,dt):
 
@@ -180,6 +190,7 @@ class GameMode(mode.Mode):
 
     def on_mouse_press(self,x,y,button,modifiers):
         if button == mouse.LEFT:
+            GameMode.gunshot.play()
             if DEBUG:
                 print "Pressed left mouse button (%s, %s)" %(x,y)
 
@@ -187,6 +198,8 @@ class GameMode(mode.Mode):
             check_hit=0
             for t in self.target_controller.targets:
                 if not t.is_dead and t.hit(x,y):
+                    c = random.randrange(0,3)
+                    GameMode.ninja_death[c].play()
                     t.sepuku()
                     check_hit=1
                     if DEBUG:
