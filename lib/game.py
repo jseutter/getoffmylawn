@@ -44,7 +44,7 @@ class GameRenderer(mode.Renderer):
     def on_draw(self):
         self.handler.window.clear() 
         self.handler.background.draw(0,0,z=0.5)
-        
+
         # Stats Calc
         try:
             accuracy_value = self.handler.hits / (self.handler.hits + self.handler.miss)
@@ -58,8 +58,8 @@ class GameRenderer(mode.Renderer):
         y = 595
         for l,v in [
             ('Hits', str(self.handler.hits)),
-            ('Miss', str(self.handler.miss)), 
-            ('Acc', '%.0f%%' %(accuracy_value*100)), 
+            ('Miss', str(self.handler.miss)),
+            ('Acc', '%.0f%%' %(accuracy_value*100)),
             ('Score', str(self.handler.score))]:
             y -= 25
             labels.append(text.Label(l, x=795, y=y, **label_properties))
@@ -68,7 +68,7 @@ class GameRenderer(mode.Renderer):
             # labels.append(font.Text(self.amsterdam, l, x=795, y=y, **label_properties))
             # labels.append(font.Text(self.amsterdam, v, x=750, y=y, **label_properties))
 
-        for l in labels: 
+        for l in labels:
             l.draw()
 
         if DEBUG:
@@ -110,7 +110,7 @@ class GameMode(mode.Mode):
     angle = 0
     achievement_counter = None
     in_a_row = 0
-    
+
     def __init__(self):
         mode.Mode.__init__(self)
         squirtle.setup_gl()
@@ -130,13 +130,12 @@ class GameMode(mode.Mode):
 
         # Moving Targets
         for t in self.target_controller.targets:
-            oldx = t.x
             if (not t.is_dead):
                 t.move(dt)
             else:
                 # only if 3 secs have pass
                 t.deadtime+=dt
-                if (t.deadtime > 3):
+                if (t.deadtime > self.target_controller.max_deadtime):
                     self.target_controller.targets.remove(t)
 
         # Incrementing counters and timers
@@ -148,15 +147,14 @@ class GameMode(mode.Mode):
         if (self.timestamp > self.target_controller.release_int):
             self.timestamp=0
             create_target = True
-            
-        
         if create_target:
             # K Were supposed to create target(s)
             count = 1
-            if (len(self.target_controller.targets) < 1):
-                # If we kill all targets then create a bunch right away
+            if (not len(filter(
+                    lambda t: not t.is_dead,
+                    self.target_controller.targets))):
+                # If we clear all targets then create a bunch right away
                 count = self.target_controller.relive_count
-
             for i in range(count):
                 if (len(self.target_controller.targets) < MAX_TARGETS):
                     self.target_controller.generate_target(run_len)
@@ -196,7 +194,7 @@ class GameMode(mode.Mode):
                 self.hits +=1
                 self.in_a_row += 1
                 self.score +=int(y/10)
-                
+
                 if(self.in_a_row == 5):
                     degrees_of_awesome.unlock(3)
                 if(self.in_a_row == 100):
