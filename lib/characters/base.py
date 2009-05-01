@@ -57,7 +57,7 @@ class Character(object):
         self.z = self.ZMAX
         self.v = Vector(0,0,-1) # initial motion vector
         self.v.x = [-4, 4][random.randint(0,1)]
-        self.angle = 0 #random.randint(0, len(ANGLES)-1)
+        self.angle = random.randint(0, len(ANGLES)-1)
         self.curr_view = self.LEFT
         self.speed = speed
         self.strength = strength
@@ -104,7 +104,7 @@ class Character(object):
                 self.z += dt * self.v.z * self.speed
             self.y = self.z
             self.x += dt * self.v.x * self.speed
-            self.angle = 0 #(self.angle + 1) % len(ANGLES)
+            self.angle = (self.angle + 1) % len(ANGLES)
             self.scale = (
                     (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
                 ) * (self.ZMAX - self.z) + self.SCALEMIN
@@ -116,7 +116,7 @@ class Character(object):
                 self.time_til_switch -= dt
 
     def draw(self):
-        getattr(self, self.curr_view).draw(self.x, self.y, angle=self.angle, scale=self.scale)
+        getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
 
     def sepuku(self):
         """ we must now die honorably like a true samurai"""

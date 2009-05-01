@@ -91,7 +91,7 @@ class GameRenderer(mode.Renderer):
         font.Text(self.amsterdam,
                      text,
                      100,
-                     300,
+                     450,
                      color=(0.9,0.1,0.1,1)).draw()
 
 class GameMode(mode.Mode):
