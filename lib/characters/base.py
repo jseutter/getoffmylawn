@@ -6,6 +6,7 @@ import os.path
 import math
 import random
 from .squirtle import SVG
+from .constants import *
 
 ANGLES=[x for x in range(5,-1,-1)] + [x for x in range(359,349,-1)] + [x for x in range(351,360)] + [x for x in range(0,5)]
 
@@ -61,6 +62,8 @@ class Character(object):
         self.speed = speed
         self.strength = strength
         self.name = self.__class__.__name__
+        self.is_dead = 0
+        self.deadtime = 0
 
     def _update_vector(self):
         '''
@@ -105,16 +108,17 @@ class Character(object):
             self.scale = (
                     (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
                 ) * (self.ZMAX - self.z) + self.SCALEMIN
-            if(self.curr_view == self.LEFT and self.time_til_switch <= 0):
-                self.curr_view = self.RIGHT
-                self.time_til_switch = random.randint(10,20)
-            elif(self.curr_view == self.RIGHT and self.time_til_switch <= 0):
-                self.curr_view =self.LEFT
-                self.time_til_switch = random.randint(10,20)
-            if self.time_til_switch <= 0:
-                self.curr_view = self.RIGHT if self.curr_view == self.LEFT else self.LEFT
-                self.time_til_switch = 10 #random.randint(5,20)
-            self.time_til_switch -= dt
-        
+            if not self.is_dead:
+                if self.time_til_switch <= 0:
+                    self.curr_view = self.RIGHT \
+                        if self.curr_view == self.LEFT else self.LEFT
+                    self.time_til_switch = 10
+                self.time_til_switch -= dt
+
     def draw(self):
         getattr(self, self.curr_view).draw(self.x, self.y, angle=self.angle, scale=self.scale)
+
+    def sepuku(self):
+        """ we must now die honorably like a true samurai"""
+        self.is_dead = 1
+        self.curr_view = self.DEAD
