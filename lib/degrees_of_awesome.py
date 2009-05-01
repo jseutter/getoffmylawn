@@ -16,11 +16,11 @@ degrees = {
     3 : ('Lazy Eye', "5 Hits in a Row, without a single miss"),
     4 : ('Dead Eye', "100 Hits in a Row, without a single miss"),
     5 : ('Mechanic', "Killed 100 Robots"),
-    6 : ('Sixth Achievement', "Get this by being awesome"),
-    7 : ('Seveth Achievement', "Get this by being awesome"),
-    8 : ('Eighth Achievement', "Get this by being awesome"),
-    9 : ('Nineth Achievement', "Get this by being awesome"),
-    10 : ('Open Source', "Anyone that has got this far, can probably figure out how to unlock this achievement")
+    6 : ('Ah-Gee', "Earn 1,000 points"),
+    7 : ('10k', "Earn 10,000 points"),
+    8 : ('Also Ran', "At 100 kills have an accuracy of at least 85%"),
+    9 : ('Biased', "Kill 5 Robots in a row without killing a single Ninja"),
+    10 : ('Open Source', "Modified local.py to give yourself all the achievement, cuz you know you are like that")
 }
 
 achievements = config.achievements

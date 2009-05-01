@@ -52,6 +52,9 @@ class GameRenderer(mode.Renderer):
             accuracy_value = 1.0
         accuracy_color = (int((1 - accuracy_value) * 255), int(accuracy_value * 255), 0, 255)
 
+        if(self.handler.hits == 100 and accuracy_value > 0.85):
+            degrees_of_awesome.unlock(8)
+
         # TODO: Put some monospace font here
         labels = []
         label_properties = dict(font_size=20, color=accuracy_color, anchor_x='right', halign='right')
@@ -194,7 +197,10 @@ class GameMode(mode.Mode):
                 self.hits +=1
                 self.in_a_row += 1
                 self.score +=int(y/10)
-
+                if(self.score >= 1000):
+                    degrees_of_awesome.unlock(6)
+                if(self.score >= 10000):
+                    degrees_of_awesome.unlock(7)
                 if(self.in_a_row == 5):
                     degrees_of_awesome.unlock(3)
                 if(self.in_a_row == 100):

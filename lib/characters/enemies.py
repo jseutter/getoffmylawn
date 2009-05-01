@@ -34,6 +34,7 @@ class Ninja(Character):
         if (x > lx and x < tx and
             y > ly and y < ty):
             Ninja.total_killed += 1
+            Robot.in_a_row = 0
             if (Ninja.total_killed == 100):
                 degrees_of_awesome.unlock(2)
             return 1
@@ -43,6 +44,7 @@ class Ninja(Character):
 # A list of enemies
 class Robot(Character):
     total_killed = 0
+    in_a_row = 0
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -69,8 +71,11 @@ class Robot(Character):
         if (x > lx and x < tx and
             y > ly and y < ty):
             Robot.total_killed += 1
+            Robot.in_a_row += 1
             if (Robot.total_killed == 100):
                 degrees_of_awesome.unlock(5)
+            if (Robot.in_a_row == 5):
+                degrees_of_awesome.unlock(9)
             return 1
         return 0
 
