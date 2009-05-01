@@ -37,18 +37,21 @@ class TargetController(object):
             self.base_multiply = 0.01
             self.base_relive_count = self.relive_count = 3
             self.base_release_int = self.release_int = 3
+            self.base_max_deadtime = self.max_deadtime = 3
         elif self.difficulty == self.MEDIUM:
             self.speed = 0.3
             self.strength = 2
             self.base_multiply = 0.05
             self.base_relive_count = self.relive_count = 5
             self.base_release_int = self.release_int = 2
+            self.base_max_deadtime = self.max_deadtime = 2
         else: #if self.difficulty == self.HARD:
             self.speed = 0.7
             self.strength = 3
             self.base_multiply = 0.1
             self.base_relive_count = self.relive_count = 7
             self.base_release_int = self.release_int = 1
+            self.base_max_deadtime = self.max_deadtime = 1
         if DEBUG:
             print 'Difficulty set to:', self.difficulty
             print 'Level:', self.level
@@ -69,6 +72,7 @@ class TargetController(object):
         '''
         self.relive_count = int(self.base_relive_count*multiplier)
         self.release_int = self.base_release_int / multiplier
+        self.max_deadtime = self.base_max_deadtime / multiplier
 
     def generate_target(self, t):
         ''' Generates a target.
@@ -81,6 +85,6 @@ class TargetController(object):
         self.targets.append(t)
         if DEBUG:
             print 'Target Created with Mult:', \
-                    '%.2f Speed: %.2f, Release: %.2f,  Relive: %s'%(
+                    '%.2f Speed: %.2f, Release: %.2f,  Relive: %s DeadT: %.2f'%(
                         multiplier, self.speed*multiplier, self.release_int,
-                        self.relive_count)
+                        self.relive_count, self.max_deadtime)

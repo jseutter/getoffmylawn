@@ -122,13 +122,12 @@ class GameMode(mode.Mode):
 
         # Moving Targets
         for t in self.target_controller.targets:
-            oldx = t.x
             if (not t.is_dead):
                 t.move(dt)
             else:
                 # only if 3 secs have pass
                 t.deadtime+=dt
-                if (t.deadtime > 3):
+                if (t.deadtime > self.target_controller.max_deadtime):
                     self.target_controller.targets.remove(t)
 
         # Incrementing counters and timers
@@ -140,15 +139,14 @@ class GameMode(mode.Mode):
         if (self.timestamp > self.target_controller.release_int):
             self.timestamp=0
             create_target = True
-
-
         if create_target:
             # K Were supposed to create target(s)
             count = 1
-            if (len(self.target_controller.targets) < 1):
-                # If we kill all targets then create a bunch right away
+            if (not len(filter(
+                    lambda t: not t.is_dead,
+                    self.target_controller.targets))):
+                # If we clear all targets then create a bunch right away
                 count = self.target_controller.relive_count
-
             for i in range(count):
                 if (len(self.target_controller.targets) < MAX_TARGETS):
                     self.target_controller.generate_target(run_len)
