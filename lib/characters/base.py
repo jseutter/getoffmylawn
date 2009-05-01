@@ -6,7 +6,7 @@ import os.path
 import math
 import random
 from .squirtle import SVG
-from .constants import *
+from .constants import DEBUG 
 
 ANGLES=[x for x in range(5,-1,-1)] + [x for x in range(359,349,-1)] + [x for x in range(351,360)] + [x for x in range(0,5)]
 
