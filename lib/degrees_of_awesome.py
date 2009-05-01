@@ -13,9 +13,9 @@ from pyglet.media import load
 degrees = {
     1 : ('Starting Out', "Got the Game Running"),
     2 : ('Killah', "Killed 100 Ninjas"),
-    3 : ('Lazy Eye', "5 Hits in a Row"),
-    4 : ('Dead Eye', "100 Hits in a Row"),
-    5 : ('Fifth Achievement', "Get this by being awesome"),
+    3 : ('Lazy Eye', "5 Hits in a Row, without a single miss"),
+    4 : ('Dead Eye', "100 Hits in a Row, without a single miss"),
+    5 : ('Mechanic', "Killed 100 Robots"),
     6 : ('Sixth Achievement', "Get this by being awesome"),
     7 : ('Seveth Achievement', "Get this by being awesome"),
     8 : ('Eighth Achievement', "Get this by being awesome"),

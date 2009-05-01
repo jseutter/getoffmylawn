@@ -70,7 +70,7 @@ class Robot(Character):
             y > ly and y < ty):
             Robot.total_killed += 1
             if (Robot.total_killed == 100):
-                degrees_of_awesome.unlock(2)
+                degrees_of_awesome.unlock(5)
             return 1
         return 0
 
