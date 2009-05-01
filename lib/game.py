@@ -28,7 +28,7 @@ import time
 game_label = text.Label("GAME", font_size=20)
 debug_label = text.Label("DEBUG", font_size=20, y=24)
 
-MAX_TARGETS = 1
+MAX_TARGETS = 100
 
 class GameRenderer(mode.Renderer):
     amsterdam = None
@@ -137,7 +137,7 @@ class GameMode(mode.Mode):
 
         # checking: should we create target(s)
         create_target = False
-        if (self.timestamp > self.target_controller.release_rate):
+        if (self.timestamp > self.target_controller.release_int):
             self.timestamp=0
             create_target = True
             
