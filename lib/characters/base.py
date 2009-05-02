@@ -67,7 +67,7 @@ class Character(object):
         self.name = self.__class__.__name__
         self.is_dead = 0
         self.deadtime = 0
-    self.sounds = sounds
+        self.sounds = sounds
         self.id = self.count
         Character.count += 1
 
