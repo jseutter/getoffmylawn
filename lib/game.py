@@ -46,7 +46,10 @@ class GameRenderer(mode.Renderer):
         self.amsterdam = font.load('Amsterdam Graffiti', 45)
 
     def on_draw(self):
-        self.handler.window.clear() 
+        if self.handler.pause:
+            self._blit_text('     Pause', False)
+            return
+        self.handler.window.clear()
         self.handler.background.draw(0,0,z=0.5)
 
         # Stats Calc
@@ -90,26 +93,25 @@ class GameRenderer(mode.Renderer):
         # Show achievement unlocked
         if (self.handler.achievement_counter):
             self.handler.achievement_counter -= 1
-            self._blit_degree_unlocked(self.degree_text)
+            self._blit_text(self.degree_text)
         elif (degrees_of_awesome.new_achievements):
             self.degree_text = degrees_of_awesome.new_achievements.pop()[0]
-            self._blit_degree_unlocked(self.degree_text)
+            self._blit_text(self.degree_text)
             self.handler.achievement_counter = 75
 
-    def _blit_degree_unlocked(self, text):
+    def _blit_text(self, text, degree_unlock=True):
+        ''' Blit Text on Screen, Mainly for displaying unlocked degrees '''
         self.achievement_popup.draw(500, 50)
-        font.Text(self.amsterdam,
-                     "Unlocked:",
-                     525,
-                     120,
-                     color=(0.27,0.125,0,1)).draw()
-        font.Text(self.amsterdam,
-                     text,
-                     525,
-                     75,
-                     color=(0.27,0.125,0,1)).draw()
+        if degree_unlock:
+            font.Text(
+                self.amsterdam, "Unlocked:", 525, 120,
+                color=(0.27,0.125,0,1)).draw()
+        font.Text(
+            self.amsterdam, text, 525, 75,
+            color=(0.27,0.125,0,1)).draw()
 
 class GameMode(mode.Mode):
+    pause = False
     name = "game"
     renderer = GameRenderer
     tick_count = 0
@@ -140,6 +142,9 @@ class GameMode(mode.Mode):
         GameMode.hlaugh.play()
 
     def update(self,dt):
+        ''' Update game state '''
+        if self.pause:
+            return
 
         # Moving Targets
         for t in self.target_controller.targets:
@@ -174,7 +179,8 @@ class GameMode(mode.Mode):
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
-            self.control.switch_handler("menu")
+            # self.control.switch_handler("menu")
+            self.pause = False if self.pause else True
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED
