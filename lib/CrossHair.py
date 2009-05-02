@@ -19,5 +19,3 @@ class CrossHair:
     def draw(self):
         self.svg.draw(self.x, self.y, z=1, angle=self.angle, scale=0.1)
         self.angle = (self.angle + 1) % 360
-		
-	
