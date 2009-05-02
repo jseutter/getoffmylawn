@@ -47,7 +47,7 @@ class GameRenderer(mode.Renderer):
 
     def on_draw(self):
         if self.handler.pause:
-            self._blit_text('     Pause', False)
+            self._blit_text('     Pause', '')
             return
         self.handler.window.clear()
         self.handler.background.draw(0,0,z=0.5)
@@ -99,20 +99,19 @@ class GameRenderer(mode.Renderer):
             self._blit_text(self.degree_text)
             self.handler.achievement_counter = 75
 
-    def _blit_text(self, text, degree_unlock=True):
+    def _blit_text(self, text, header='Unlocked:'):
         ''' Blit Text on Screen, Mainly for displaying unlocked degrees '''
         self.achievement_popup.draw(500, 50)
-        if degree_unlock:
-            font.Text(
-                self.amsterdam, "Unlocked:", 525, 120,
-                color=(0.27,0.125,0,1)).draw()
+        font.Text(
+            self.amsterdam, header, 525, 120,
+            color=(0.27,0.125,0,1)).draw()
         font.Text(
             self.amsterdam, text, 525, 75,
             color=(0.27,0.125,0,1)).draw()
 
 class GameMode(mode.Mode):
-    pause = False
     name = "game"
+    pause = False
     renderer = GameRenderer
     tick_count = 0
     background = None

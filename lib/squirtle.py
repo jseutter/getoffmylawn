@@ -592,7 +592,7 @@ class SVG(object):
         x_ = cp * dx + sp * dy
         y_ = -sp * dx + cp * dy
         r2 = (((rx * ry)**2 - (rx * y_)**2 - (ry * x_)**2)/
-	      ((rx * y_)**2 + (ry * x_)**2))
+                ((rx * y_)**2 + (ry * x_)**2))
         if r2 < 0: r2 = 0
         r = math.sqrt(r2)
         if large_arc == sweep:
