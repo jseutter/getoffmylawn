@@ -45,7 +45,7 @@ class Character(object):
     dead=None
     time_til_switch = 0
 
-    def __init__(self, speed=0.01, strength=1):
+    def __init__(self, speed=0.01, strength=1, sounds=None):
         '''
         Initializes a character at a given time `t`
         '''
@@ -64,6 +64,7 @@ class Character(object):
         self.name = self.__class__.__name__
         self.is_dead = 0
         self.deadtime = 0
+	self.sounds = sounds
 
     def _update_vector(self):
         '''
@@ -114,6 +115,13 @@ class Character(object):
                         if self.curr_view == self.LEFT else self.LEFT
                     self.time_til_switch = 10
                 self.time_til_switch -= dt
+
+		# Play the character's sounds randomly
+		if (self.sounds):
+		    # But don't play them too often...
+		    c = random.randrange(0,10*len(self.sounds))
+		    if (c < len(self.sounds)):
+	                self.sounds[c].play()
 
     def draw(self):
         getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)

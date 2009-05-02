@@ -119,7 +119,6 @@ class GameMode(mode.Mode):
     in_a_row = 0
     gunshot = StaticSource(load('resources/sounds/gunshot.ogg'))
     hlaugh = StaticSource(load('resources/sounds/horrible_laugh.ogg'))
-    spray = StaticSource(load('resources/sounds/spraypaint.ogg'))
     ninja_death=[StaticSource(load('resources/sounds/ninja_death_1.ogg')),StaticSource(load('resources/sounds/ninja_death_2.ogg')),StaticSource(load('resources/sounds/ninja_death_3.ogg'))]
 
     def __init__(self):

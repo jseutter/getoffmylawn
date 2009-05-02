@@ -5,6 +5,8 @@ Gomfl Enemies
 from base import Character, create_svg
 import degrees_of_awesome
 from pyglet import clock
+from pyglet.media import StaticSource
+from pyglet.media import load
 
 class Ninja(Character):
     total_killed = 0
@@ -14,6 +16,8 @@ class Ninja(Character):
         self.right = create_svg('ninja_right.svg')
         self.left = create_svg('ninja.svg')
         self.dead = create_svg('ninja_death.svg')
+	self.sounds = [StaticSource(load('resources/sounds/ninja_hiya_1.ogg')),
+                       StaticSource(load('resources/sounds/ninja_hiya_2.ogg'))]
 
     def hit(self, x, y):
         """
@@ -50,6 +54,9 @@ class Robot(Character):
         self.right = create_svg('robot_right.svg')
         self.left = create_svg('robot_left.svg')
         self.dead = create_svg('robot_death.svg')
+	self.sounds = [StaticSource(load('resources/sounds/ninja_oh_1.ogg')),
+                       StaticSource(load('resources/sounds/ninja_oh_2.ogg')),
+                       StaticSource(load('resources/sounds/ninja_oh_3.ogg'))]
 
     def hit(self, x, y):
         """
@@ -86,6 +93,7 @@ class GraffitiArtist(Character):
         self.right = create_svg('graffiti_right.svg')
         self.left = create_svg('graffiti_left.svg')
         self.dead = create_svg('graffiti_death.svg')
+	self.sounds = [StaticSource(load('resources/sounds/spraypaint.ogg'))]
 
     def hit(self, x, y):
         """
