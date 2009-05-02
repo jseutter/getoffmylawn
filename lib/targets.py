@@ -99,7 +99,9 @@ class TargetController(object):
         '''
         multiplier = self.get_multiplier(t)
         self.update_variables(multiplier)
-        t = get_random_target_class()(speed=self.speed*multiplier)
+        Enemy = get_random_target_class(
+                    characters.enemies.ENEMIES[:self.level])
+        t = Enemy(speed=self.speed*multiplier)
         self.targets.append(t)
         if DEBUG:
             print 'Target Created with Mult:', \

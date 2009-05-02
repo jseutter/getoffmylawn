@@ -76,7 +76,10 @@ class GameRenderer(mode.Renderer):
             ('Miss', str(self.handler.miss)),
             ('Acc', '%.0f%%' %(accuracy_value*100)),
             ('Score', str(self.handler.score)),
-            ('Health', '%.0f%%' %(health*100))]:
+            ('Health', '%.0f%%' %(health*100)),
+            ('Level', '%s/%s' %(
+                self.handler.target_controller.level,
+                len(self.handler.LEVELS)+1))]:
             y -= 25
             labels.append(text.Label(l, x=795, y=y, **label_properties))
             labels.append(text.Label(v, x=700, y=y, **label_properties))
