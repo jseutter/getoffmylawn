@@ -8,6 +8,7 @@ from pyglet import clock
 
 class Ninja(Character):
     total_killed = 0
+    ANGLEMAX = 5
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
@@ -111,4 +112,3 @@ class GraffitiArtist(Character):
 
 # A list of enemies
 ENEMIES = [Ninja,Robot,GraffitiArtist,]
-

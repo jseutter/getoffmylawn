@@ -6,9 +6,7 @@ import os.path
 import math
 import random
 from .squirtle import SVG
-from .constants import DEBUG 
-
-ANGLES=[x for x in range(5,-1,-1)] + [x for x in range(359,349,-1)] + [x for x in range(351,360)] + [x for x in range(0,5)]
+from .constants import DEBUG
 
 def randomize_number(n):
     ''' A function to mess with a number '''
@@ -35,6 +33,8 @@ class Character(object):
     ZMAX = 300
     ZMIN = 0
     ZBUFFER = 50 # allow things to go this much off screen (Z-Axis)
+    ANGLEMIN = -10
+    ANGLEMAX = 10 
 
     # Look and feel
     LEFT = 'left'
@@ -44,6 +44,8 @@ class Character(object):
     right=None
     dead=None
     time_til_switch = 0
+
+    count = 0 # number of created characters
 
     def __init__(self, speed=0.01, strength=1):
         '''
@@ -57,13 +59,16 @@ class Character(object):
         self.z = self.ZMAX
         self.v = Vector(0,0,-1) # initial motion vector
         self.v.x = [-4, 4][random.randint(0,1)]
-        self.angle = random.randint(0, len(ANGLES)-1)
+        self.angle = random.randint(self.ANGLEMIN, self.ANGLEMAX)
+        self.rotation_dir = [-1,1][random.randint(0,1)]
         self.curr_view = self.LEFT
         self.speed = speed
         self.strength = strength
         self.name = self.__class__.__name__
         self.is_dead = 0
         self.deadtime = 0
+        self.id = self.count
+        Character.count += 1
 
     def _update_vector(self):
         '''
@@ -95,16 +100,30 @@ class Character(object):
             if random.randint(0,1):
                 self.v.x = randomize_number(-1)
 
+    def _update_angle(self, dt):
+        '''
+        Function responsible for updating the rotated angle
+        based on the delta `dt` of time since the last update.
+        `self.speed` is used for angular rotation.
+        '''
+        self.angle += self.rotation_dir * self.speed * dt
+        if self.angle >= self.ANGLEMAX:
+            self.angle = self.ANGLEMAX
+            self.rotation_dir = -self.rotation_dir
+        elif self.angle <= self.ANGLEMIN:
+            self.angle = self.ANGLEMIN
+            self.rotation_dir = -self.rotation_dir
+
     def move(self, dt):
         ''' updates location based on time elapsed `t` '''
         if (not self.curr_view == self.DEAD):
             dt *= 100 # time increment is normally quite small
+            self._update_angle(dt)
             self._update_vector()
             if self.z > self.ZMIN - self.ZBUFFER:
                 self.z += dt * self.v.z * self.speed
             self.y = self.z
             self.x += dt * self.v.x * self.speed
-            self.angle = (self.angle + 1) % len(ANGLES)
             self.scale = (
                     (self.SCALEMAX - self.SCALEMIN) / (self.ZMAX - self.ZMIN)
                 ) * (self.ZMAX - self.z) + self.SCALEMIN
@@ -116,7 +135,8 @@ class Character(object):
                 self.time_til_switch -= dt
 
     def draw(self):
-        getattr(self, self.curr_view).draw(self.x, self.y, angle=ANGLES[self.angle], scale=self.scale)
+        getattr(self, self.curr_view).draw(
+            self.x, self.y, angle=self.angle, scale=self.scale)
 
     def sepuku(self):
         """ we must now die honorably like a true samurai"""
