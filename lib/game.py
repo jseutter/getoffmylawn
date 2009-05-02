@@ -155,12 +155,6 @@ class GameMode(mode.Mode):
         self.timestamp+=dt
         run_len=time.time() - self.runtime
 
-        #Increase diff and level
-        if (run_level < 5):
-            self.target_controller = TargetController(TargetController.MEDIUM)
-        elif (run_level < 8):
-            self.target_controller = TargetController(TargetController.HARD)
-
         # checking: should we create target(s)
         create_target = False
         if (self.timestamp > self.target_controller.release_int):
