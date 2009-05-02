@@ -140,7 +140,7 @@ class Character(object):
                     # But don't play them too often...
                     c = random.randrange(0,10*len(self.sounds))
                     if (c < len(self.sounds)):
-                            self.sounds[c].play()
+                        self.sounds[c].play()
 
     def draw(self):
         getattr(self, self.curr_view).draw(
