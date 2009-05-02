@@ -170,12 +170,7 @@ class GameMode(mode.Mode):
                 count = self.target_controller.relive_count
             for i in range(count):
                 if (len(self.target_controller.targets) < MAX_TARGETS):
-                    if (run_len < 5):
                         self.target_controller.generate_target(run_len)
-                    elif (run_len < 10):
-                        self.target_controller.generate_target(run_len,difficulty='normal')
-                    else:
-                        self.target_controller.generate_target(run_len,difficulty='ouch')
 
     def on_key_press(self, sym, mods):
         if sym == key.SPACE:
