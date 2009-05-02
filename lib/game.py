@@ -7,6 +7,7 @@ import os.path
 from pyglet import text
 from pyglet import font
 from pyglet import image
+from pyglet import clock
 from pyglet.event import EVENT_HANDLED
 from pyglet.event import EVENT_UNHANDLED
 from pyglet.window import key
@@ -83,6 +84,18 @@ class GameRenderer(mode.Renderer):
         for l in labels:
             l.draw()
 
+        # Show some text that stating well done
+        if self.handler.game_complete:
+            text.Label(
+                'GAME COMPLETED',
+                font_name='Times New Roman',
+                font_size=36,
+                color=(64,64,64,128),
+                x=self.handler.window.width//2,
+                y=self.handler.window.height-50,
+                anchor_x='center',
+                anchor_y='center').draw()
+
         if DEBUG:
             debug_label.draw()
 
@@ -98,6 +111,16 @@ class GameRenderer(mode.Renderer):
         # The game is over, but let the poor guy play neways
         if self.handler.game_over:
             self._blit_text('who cares?', 'Game Over, but')
+
+        # Show some text at the end of the level
+        if self.handler.level_anime == 1:
+            self._blit_text('  Complete', 'Level %s' %(
+                self.handler.target_controller.level))
+        elif self.handler.level_anime == 2:
+            self._blit_text('    Level %s' %(
+                self.handler.target_controller.level+1), 'Proceed...')
+        elif self.handler.level_anime == 3:
+            self._blit_text('', '    - HAI -')
 
         # Show achievement unlocked
         if (self.handler.achievement_counter):
@@ -133,9 +156,10 @@ class GameMode(mode.Mode):
     SDDOWN = 10 # inverse prop to score
     HDDOWN = 10 # inverse prop to health *loss*
     LAWN_ZMAX = 280
-#     HEALTH = 1000000
-    HEALTH = 100000
-    game_over = False
+    HEALTH = 1000000
+    LEVELS = [1000, 3000, 5000, 10000]
+    game_complete = False
+    level_anime = 0
 
     def __init__(self):
         mode.Mode.__init__(self)
@@ -169,19 +193,50 @@ class GameMode(mode.Mode):
             self.SDDOWN = 10
             self.HDDOWN = 1
 
+    def _is_game_over(self):
+        if self.health_loss >= self.HEALTH:
+            self.health_loss = self.HEALTH
+            return True
+        return False
+    game_over = property(_is_game_over)
+
+    def killall(self):
+        ''' kill all targets '''
+        for t in self.target_controller.targets:
+            t.sepuku()
+
+    @staticmethod
+    def _level_anime(dt, self):
+        if self.level_anime <= 3:
+            self.level_anime += 1
+            clock.schedule_once(self._level_anime, 2, self)
+        else:
+            self.level_anime = -1
+        if DEBUG:
+            print 'LEVEL END ANIMATION (%s)' %(self.level_anime)
+
     def update(self,dt):
         ''' Update game state '''
-        if self.pause:
+        if self.pause or self.level_anime > 0:
             return
+        elif self.level_anime == -1:
+            if self.target_controller.level + 1 > len(self.LEVELS):
+                self.game_complete = True
+            self.target_controller = TargetController(
+                self.target_controller.difficulty,
+                self.target_controller.level + 1)
+            self.level_anime = 0
+        elif not (self.game_complete or self.level_anime) and (
+            self.score > self.LEVELS[self.target_controller.level - 1]):
+            self.level_anime = 1
+            clock.schedule_once(self._level_anime, 2.5, self)
+            self.killall()
 
         for t in self.target_controller.targets:
             if (not t.is_dead):
                 # Calculate the health kill
                 if t.z < self.LAWN_ZMAX:
                     self.health_loss += (self.LAWN_ZMAX - t.z) / self.HDDOWN
-                    if self.health_loss >= self.HEALTH:
-                        self.health_loss = self.HEALTH
-                        self.game_over = True
                 # Move Target
                 t.move(dt)
             else:
@@ -212,9 +267,27 @@ class GameMode(mode.Mode):
                         self.target_controller.generate_target(run_len)
 
     def on_key_press(self, sym, mods):
+        if DEBUG:
+            print 'KeyPress:', sym, 'Mods:', mods
         if sym == key.SPACE:
             # self.control.switch_handler("menu")
             self.pause = False if self.pause else True
+        elif mods & key.MOD_CTRL and mods & key.MOD_SHIFT:
+            # Cheats
+            if sym == key.A:
+                self.killall()
+            elif sym == key.S:
+                self.score += 500
+            elif sym == key.W:
+                self.target_controller.speed_down()
+            elif sym == key.E:
+                self.target_controller.speed_up()
+            elif sym == key.R:
+                self.target_controller.speed_restore()
+            elif sym == key.Q:
+                self.HEALTH = self.health_loss + 100000
+            elif sym == key.D:
+                self.game_complete = True
         else:
             return EVENT_UNHANDLED
         return EVENT_HANDLED

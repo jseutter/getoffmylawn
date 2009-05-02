@@ -25,6 +25,7 @@ class TargetController(object):
     HARD='ouch'
     MULT_T = 10  # use multiplier every `MULT_T` secs
     LEVEL_DIFF = 0.15 # % difficulty increase per level (0.15=15%)
+    backup = None
 
     def __init__(self, difficulty='sissy', level=1):
         self.targets = []
@@ -55,6 +56,23 @@ class TargetController(object):
         if DEBUG:
             print 'Difficulty set to:', self.difficulty
             print 'Level:', self.level
+
+    def speed_down(self):
+        ''' for use with cheats '''
+        if not self.backup:
+            self.backup = (self.speed, self.base_multiply)
+        self.speed, self.base_multiply = 0.01, 0.001
+
+    def speed_up(self):
+        ''' for use with cheats '''
+        if not self.backup:
+            self.backup = (self.speed, self.base_multiply)
+        self.speed, self.base_multiply = 1, 0.1
+
+    def speed_restore(self):
+        ''' for use with cheats '''
+        if self.backup:
+            self.speed, self.base_multiply = self.backup
 
     def get_multiplier(self, t):
         '''
