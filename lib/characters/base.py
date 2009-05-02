@@ -47,7 +47,7 @@ class Character(object):
 
     count = 0 # number of created characters
 
-    def __init__(self, speed=0.01, strength=1):
+    def __init__(self, speed=0.01, strength=1, sounds=None):
         '''
         Initializes a character at a given time `t`
         '''
