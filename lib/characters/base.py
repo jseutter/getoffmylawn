@@ -67,7 +67,7 @@ class Character(object):
         self.name = self.__class__.__name__
         self.is_dead = 0
         self.deadtime = 0
-	self.sounds = sounds
+    self.sounds = sounds
         self.id = self.count
         Character.count += 1
 
@@ -135,12 +135,12 @@ class Character(object):
                     self.time_til_switch = 10
                 self.time_til_switch -= dt
 
-		# Play the character's sounds randomly
-		if (self.sounds):
-		    # But don't play them too often...
-		    c = random.randrange(0,10*len(self.sounds))
-		    if (c < len(self.sounds)):
-	                self.sounds[c].play()
+                # Play the character's sounds randomly
+                if (self.sounds):
+                    # But don't play them too often...
+                    c = random.randrange(0,10*len(self.sounds))
+                    if (c < len(self.sounds)):
+                            self.sounds[c].play()
 
     def draw(self):
         getattr(self, self.curr_view).draw(
