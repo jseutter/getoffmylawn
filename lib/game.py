@@ -46,13 +46,17 @@ class GameRenderer(mode.Renderer):
         self.amsterdam = font.load('Amsterdam Graffiti', 45)
 
     def on_draw(self):
+
         if self.handler.pause:
             self._blit_text('     Pause', '')
             return
+
         self.handler.window.clear()
         self.handler.background.draw(0,0,z=0.5)
 
         # Stats Calc
+        health = (self.handler.HEALTH -
+                    self.handler.health_loss) / self.handler.HEALTH
         try:
             accuracy_value = self.handler.hits / (self.handler.hits + self.handler.miss)
         except ZeroDivisionError:
@@ -70,13 +74,11 @@ class GameRenderer(mode.Renderer):
             ('Hits', str(self.handler.hits)),
             ('Miss', str(self.handler.miss)),
             ('Acc', '%.0f%%' %(accuracy_value*100)),
-            ('Score', str(self.handler.score))]:
+            ('Score', str(self.handler.score)),
+            ('Health', '%.0f%%' %(health*100))]:
             y -= 25
             labels.append(text.Label(l, x=795, y=y, **label_properties))
             labels.append(text.Label(v, x=700, y=y, **label_properties))
-            # Trying to use the glyphs, to uncomment these you must mess with label_prop
-            # labels.append(font.Text(self.amsterdam, l, x=795, y=y, **label_properties))
-            # labels.append(font.Text(self.amsterdam, v, x=750, y=y, **label_properties))
 
         for l in labels:
             l.draw()
@@ -89,6 +91,13 @@ class GameRenderer(mode.Renderer):
         # Redraw existing targets
         for t in reversed(self.handler.target_controller.targets):
             t.draw()
+
+        # Health Bar
+        self.handler.health_bar.draw(25,10,scale=(health,1))
+
+        # The game is over, but let the poor guy play neways
+        if self.handler.game_over:
+            self._blit_text('who cares?', 'Game Over, but')
 
         # Show achievement unlocked
         if (self.handler.achievement_counter):
@@ -121,35 +130,62 @@ class GameMode(mode.Mode):
     gunshot = StaticSource(load('resources/sounds/gunshot.ogg'))
     hlaugh = StaticSource(load('resources/sounds/horrible_laugh.ogg'))
     ninja_death=[StaticSource(load('resources/sounds/ninja_death_1.ogg')),StaticSource(load('resources/sounds/ninja_death_2.ogg')),StaticSource(load('resources/sounds/ninja_death_3.ogg'))]
+    SDDOWN = 10 # inverse prop to score
+    HDDOWN = 10 # inverse prop to health *loss*
+    LAWN_ZMAX = 280
+#     HEALTH = 1000000
+    HEALTH = 100000
+    game_over = False
 
     def __init__(self):
         mode.Mode.__init__(self)
         squirtle.setup_gl()
 
         self.background = squirtle.SVG("resources/backdrop.svg")
+        self.health_bar = squirtle.SVG("resources/health_bar.svg")
 
         self.crossHair = CrossHair()
         self.crossHair.handler = self
         self.target_controller = TargetController(TargetController.MEDIUM)
+        self._update_difficulty(TargetController.MEDIUM)
         self.runtime=time.time()
         self.timestamp=0
         self.hits=0
         self.miss=0
         self.score=0
+        self.health_loss = 0
 
         GameMode.hlaugh.play()
+
+    def _update_difficulty(self, difficulty):
+        ''' update vars related to `difficulty` '''
+        if difficulty == TargetController.EASY:
+            self.SDDOWN = 20
+            self.HDDOWN = 3
+        elif difficulty == TargetController.MEDIUM:
+            self.SDDOWN = 15
+            self.HDDOWN = 2
+        else: # difficulty == TargetController.HARD:
+            self.SDDOWN = 10
+            self.HDDOWN = 1
 
     def update(self,dt):
         ''' Update game state '''
         if self.pause:
             return
 
-        # Moving Targets
         for t in self.target_controller.targets:
             if (not t.is_dead):
+                # Calculate the health kill
+                if t.z < self.LAWN_ZMAX:
+                    self.health_loss += (self.LAWN_ZMAX - t.z) / self.HDDOWN
+                    if self.health_loss >= self.HEALTH:
+                        self.health_loss = self.HEALTH
+                        self.game_over = True
+                # Move Target
                 t.move(dt)
             else:
-                # only if 3 secs have pass
+                # they killed Kenny!
                 t.deadtime+=dt
                 if (t.deadtime > self.target_controller.max_deadtime):
                     self.target_controller.targets.remove(t)
@@ -216,7 +252,7 @@ class GameMode(mode.Mode):
                 self.in_a_row += 1
                 # z-axis is the ground plane
                 # score based on target position rather than mouse pos
-                hit_score = int(t.z/10)
+                hit_score = int(t.z/self.SDDOWN)
                 # Sometimes the target is past 0 (i.e. t.z is -ve)
                 if hit_score > 0:
                     self.score += hit_score
