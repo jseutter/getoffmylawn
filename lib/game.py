@@ -203,13 +203,19 @@ class GameMode(mode.Mode):
                     t.sepuku()
                     check_hit=1
                     if DEBUG:
-                        print t.name, '(%.f, %.f)'%(t.x, t.y), 'killed. Success!'
+                        print t.id, '(%.f, %.f, %.f)'%(t.x, t.y, t.z), 'killed'
                     break
 
-            if 1 == check_hit:
+            # Score and Awesomeness degree
+            if check_hit:
                 self.hits +=1
                 self.in_a_row += 1
-                self.score +=int(y/10)
+                # z-axis is the ground plane
+                # score based on target position rather than mouse pos
+                hit_score = int(t.z/10)
+                # Sometimes the target is past 0 (i.e. t.z is -ve)
+                if hit_score > 0:
+                    self.score += hit_score
                 if(self.score >= 1000):
                     degrees_of_awesome.unlock(6)
                 if(self.score >= 10000):
