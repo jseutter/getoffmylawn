@@ -331,8 +331,6 @@ class GameMode(mode.Mode):
                     self.score += hit_score
                 if(self.score >= 1000):
                     degrees_of_awesome.unlock(6)
-                if(self.score >= 10000):
-                    degrees_of_awesome.unlock(7)
                 if(self.in_a_row == 5):
                     degrees_of_awesome.unlock(3)
                 if(self.in_a_row == 100):

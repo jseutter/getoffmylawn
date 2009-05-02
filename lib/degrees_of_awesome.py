@@ -17,9 +17,9 @@ degrees = {
     4 : ('Dead Eye', "100 Hits in a Row, without a single miss"),
     5 : ('Mechanic', "Killed 100 Robots"),
     6 : ('Ah-Gee', "Earn 1,000 points"),
-    7 : ('10k', "Earn 10,000 points"),
+    7 : ('Darn Kids', "Killed 100 Vandals"),
     8 : ('Also Ran', "At 100 kills have an accuracy of at least 85%"),
-    9 : ('Biased', "Kill 5 Robots in a row without killing a single Ninja"),
+    9 : ('Biased', "Kill 5 Robots in a row without killing a single Ninja or Vandal"),
     10 : ('Open Source', "Modified local.py to give yourself all the achievement, cuz you know you are like that")
 }
 

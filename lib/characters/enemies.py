@@ -114,7 +114,10 @@ class GraffitiArtist(Character):
 
         if (x > lx and x < tx and
             y > ly and y < ty):
+            Robot.in_a_row = 0
             GraffitiArtist.total_killed += 1
+            if(GraffitiArtist.total_killed == 100):
+                degrees_of_awesome.unlock(7)
             return 1
         return 0
 
